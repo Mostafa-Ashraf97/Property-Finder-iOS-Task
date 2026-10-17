@@ -46,8 +46,6 @@ CI uses `BUNDLE_FROZEN=true` to reject unexpected dependency-lock changes. These
 
 `.swiftformat` is a plain SwiftFormat configuration file, not another tool. It defines the agreed Swift language mode, indentation, line width and exclusions. The pre-commit hook and CI use this same file so their results agree. Mise pins the formatter executable version; this file defines its formatting rules.
 
-The supplied app-local Settings files are temporarily excluded to preserve them until the separate Settings refactor. Remove that exclusion when Settings moves into the package and adopts the shared formatting rules.
-
 SwiftFormat and Gitleaks only discover config files at the repository root or beside the files they check. These configs live in `Tooling/`, so always pass them explicitly: `--config Tooling/.swiftformat` and `--config Tooling/gitleaks.toml`. That applies to every command, editor integration and the SwiftFormat Xcode extension. A plain `swiftformat .` falls back to SwiftFormat's defaults, which format differently (for example, trailing commas in argument lists).
 
 ## Common commands
@@ -108,7 +106,7 @@ git hook run pre-commit
 
 No `Tuist.swift` is needed for the current setup. The shared scheme contains no dependency on the Tuist executable.
 
-`TestPlans/Tahudu.xctestplan` selects `TahuduTests`, `ListingsTests`, `NetworkingTests` and `LoggerTests`. Its app target identifier refers to the generated project; verify the plan when renaming targets.
+`TestPlans/Tahudu.xctestplan` selects `TahuduTests`, `ListingsTests`, `SettingsTests`, `NetworkingTests` and `LoggerTests`. Its app target identifier refers to the generated project; verify the plan when renaming targets.
 
 The generated scheme shows the Main Thread Checker as disabled, because Tuist's test-plan scheme API has no diagnostics option. Test runs follow the plan's own setting, which enables it.
 

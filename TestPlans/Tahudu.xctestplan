@@ -3,7 +3,8 @@
     {
       "id": "6F7C76CF-0546-4D67-A8A5-BC2A5E340323",
       "name": "Default",
-      "options": {}
+      "options": {
+      }
     }
   ],
   "defaultOptions": {
@@ -22,6 +23,13 @@
         "containerPath": "container:Packages/PropertyFinderKit",
         "identifier": "ListingsTests",
         "name": "ListingsTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:Packages/PropertyFinderKit",
+        "identifier": "SettingsTests",
+        "name": "SettingsTests"
       }
     },
     {

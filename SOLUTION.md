@@ -14,7 +14,7 @@
 | 1 — Search UI | Rebuilt in SwiftUI from the screenshot. The header is pinned and results scroll beneath it. Fonts follow the brief (tags `.caption2`, price `.headline`, card text `.caption`), and spacing and corner radii are multiples of 4. Contact buttons log a short statement to the console through the injected logger. |
 | 2 — Live data | Listings come from the endpoint via `URLSession` + `async/await` and drive tags, metadata, contact buttons, the carousel, relative publish dates and the optional "Last contacted" banner. `bedrooms: null` renders as Studio. |
 | 3 — Favourites | The heart on a card toggles a favourite, and favourites persist locally. The star in the header filters to favourites; while it's on, the star is filled, a "★ 2 saved properties · Show all" bar appears under the search field, and the list is tinted. Removing the last favourite shows an empty state with a way back. |
-| Bonus — Settings | The supplied UIKit screen is unchanged in this commit; its refactor and tests follow in their own commit. |
+| Bonus — Settings | Refactored in UIKit behind the existing SwiftUI wrapper. One row model drives the table, platform defaults handle appearance, and XCTest covers configuration and selection. See below. |
 
 Extras: text search over location and type, property-type and bedroom filters with a live result count, sorting, pull to refresh, and support for Dynamic Type (including accessibility sizes), VoiceOver labels and 44pt tap targets.
 
@@ -27,15 +27,16 @@ Tahudu (app, composition root)
 └─ TahuduTabView
 PropertyFinderKit (local Swift package)
 ├─ Features/
-│  └─ Listings
-│     ├─ ListingsFactory        public entry point; builds the feature's screens
-│     ├─ Domain/                models, errors, repository contracts, use cases, Mocks/ (sample listings)
-│     ├─ Data/
-│     │  ├─ Endpoints/          ListingsEndpoint (base URL, path and method of each call)
-│     │  ├─ DTOs/               API shapes + toDomainModel()
-│     │  ├─ DataSources/        ListingsRemoteDataSource (HTTP), FavouritesLocalDataSource (UserDefaults)
-│     │  └─ Repositories/       ListingsRepository, FavouritesRepository
-│     └─ Presentation/          ListingsView, ListingsViewModel, ListingsViewState, ListingCardViewData, Components/ (SearchHeader, ListingsContent, ListingCard, ListingPhotos, FiltersSheet), Mocks/ (view model and cards for previews)
+│  ├─ Listings
+│  │  ├─ ListingsFactory        public entry point; builds the feature's screens
+│  │  ├─ Domain/                models, errors, repository contracts, use cases, Mocks/ (sample listings)
+│  │  ├─ Data/
+│  │  │  ├─ Endpoints/          ListingsEndpoint (base URL, path and method of each call)
+│  │  │  ├─ DTOs/               API shapes + toDomainModel()
+│  │  │  ├─ DataSources/        ListingsRemoteDataSource (HTTP), FavouritesLocalDataSource (UserDefaults)
+│  │  │  └─ Repositories/       ListingsRepository, FavouritesRepository
+│  │  └─ Presentation/          ListingsView, ListingsViewModel, ListingsViewState, ListingCardViewData, Components/ (SearchHeader, ListingsContent, ListingCard, ListingPhotos, FiltersSheet), Mocks/ (view model and cards for previews)
+│  └─ Settings                  UIKit screen: SettingsRow (rows and their actions), SettingsViewController, SettingsView (SwiftUI wrapper)
 ├─ DesignSystem                 Colors/, Typography/, Images/, Components/, Resources/ (the only UI asset catalog)
 ├─ Networking                   Endpoint protocol; HTTPClient sends requests and decodes JSON
 ├─ Logger                       LoggerProtocol + AppLogger over the unified log
@@ -66,11 +67,11 @@ Key decisions:
 - **Timeouts.** The HTTP client uses URLSession defaults: a 60-second request inactivity timeout and a 7-day resource timeout. There is no endpoint requirement or measured basis for custom timeout values in this task. The injected-session initializer remains available for callers that supply a session.
 - **HTTP caching.** The app injects a `URLSession(configuration: .default)` into the HTTP client. The default `.useProtocolCachePolicy` and shared `URLCache` already provide HTTP caching and validation; there is no custom configuration factory or arbitrary cache sizing. Capacity, eviction and sharing now follow the system defaults. The supplied endpoint sends an `ETag` with `Cache-Control: public, max-age=0, must-revalidate`; a default-session probe confirmed automatic validation and delivery of cached JSON as a successful response. This saves retransferring an unchanged body while still checking with the server. No custom expiry, permanent offline guarantee or manual 304 handling is added.
 - **Concurrency.** Swift 6 language mode with complete concurrency checking. The UI-only app target defaults to MainActor isolation. Feature and shared package targets stay nonisolated by default. UI state is explicitly `@MainActor`. The synchronous favourites data source, repository, load and toggle protocols share MainActor isolation, allowing small reads and updates from the UI without actor hops or unchecked sendability; this is an implementation choice, not a UserDefaults requirement. Their immutable wrappers inherit isolation for the conforming methods and need no duplicate type annotation. Fetching is asynchronous and Sendable; querying is a stateless Sendable value operation and runs on its caller’s actor. Protocol conformance in an extension isolates that extension, not the entire type, so the stateful view model retains its own annotation to protect stored state and private helpers. Cross-isolation data is `Sendable`.
-- **Conformance style.** Views and the `App` declare their conformance on the type, with `body` inside the main declaration; that conformance also makes them main-actor isolated. Other conformances with implemented methods or computed properties go in same-file extensions, keeping private helpers on the main declaration. Put conformances with no implementation to group (including synthesized conformances) on the type itself, avoiding empty extensions. Stored properties and enum raw types remain in declarations. The presentation-owned error descriptions are a deliberate layer-based exception to co-location.
+- **Conformance style.** Views and the `App` declare their conformance on the type, with `body` inside the main declaration; that conformance also makes them main-actor isolated. Other conformances with implemented methods or computed properties go in same-file extensions, keeping private helpers on the main declaration. Put conformances with no implementation to group (including synthesized conformances) on the type itself, avoiding empty extensions. Stored properties and enum raw types remain in declarations. The presentation-owned error descriptions are a deliberate layer-based exception to co-location. The Settings controller keeps the supplied placeholder actions in their original extension, unchanged.
 - **Modules.** Each feature owns its layers; shared modules know nothing about listings. The app sees only each feature's factory and screens; domain and data types stay internal.
 - **Assets.** The app's catalog holds only the app icon, which Xcode requires in the app target. Every colour, symbol and image the UI uses lives in `DesignSystem` under semantic names such as `success` and `noticeBackground`, so features share one catalog. Both carousel photos have 1×, 2× and 3× renditions. The smaller variants are downsampled directly from each original 3× JPEG; the original files are preserved, with pixel dimensions rounded to whole pixels.
 - **Logging privacy.** The logger uses the previous string-based API with `LogPrivacy`. Complete messages are private by default, so collected logs normally show `<private>`; a caller can explicitly use `privacy: .public` for safe diagnostics. Private values may still be visible while debugging. Debug, info and error use their native unified-log levels in both configurations; visibility, persistence and retention follow the system logging policy.
-- **English-only UI.** The app fixes its SwiftUI locale to `en_AE` and layout direction to left-to-right. Card dates/numbers use an explicit English locale, filter choices use ordinary sorting, and error messages are English strings. There are no translation catalogs or localization TODOs, and automatic string extraction is disabled.
+- **English-only UI.** The app fixes its SwiftUI locale to `en_AE` and layout direction to left-to-right. Card dates/numbers use an explicit English locale, filter choices use ordinary sorting, and error messages are English strings. There are no translation catalogs or localization TODOs, and automatic string extraction is disabled. The UIKit Settings language row displays "English".
 - **Touch targets.** The shared `expandingHitArea` helper enforces a 44pt minimum before applying its rectangular hit shape, including for caption-sized summary actions and the input clear button.
 - **Spacing.** `DesignSystem.Spacing` provides package-scoped point values (`pt4`, `pt8`, `pt12`, `pt16`, `pt24`, `pt32`, `pt48`). Listings and the shared input use them for gaps, padding, insets and offsets. Control sizes, corner radii and content-width limits retain their separate layout meanings.
 - **Photos.** Zero or one image uses a static photo or placeholder. Only multiple images create a carousel, page dots and VoiceOver adjustment actions, keeping empty arrays out of page-index calculations.
@@ -85,11 +86,30 @@ Key decisions:
 - Location, bathrooms and area are shown alongside bedrooms, so it's visible why a search matched.
 - The reference-design header star toggles the favourites filter. Hearts on individual cards still save and remove properties; there is no separate saved-search action.
 
+## Settings
+
+Refactored in UIKit, keeping the existing `SettingsView` wrapper (`UIViewControllerRepresentable`). The screen has no data or business rules, so it needs no use cases or repositories. One row model and a thin controller are enough.
+
+- **One source of truth, open for new rows.** Before, the layout was written three times, as nested `if`s, in the row counts, the cell setup and the tap handling; those copies could drift apart silently, showing a blank cell or running another row's action. Now each `SettingsRow` carries its title, icon, value and action, and `makeSections()` lists them in order. The table methods only read rows and call `row.action()` when one is tapped, so adding, removing or reordering a row is one entry in `makeSections()` and the table code never changes. The menu lives in the controller because its actions call the supplied private placeholders.
+- **Current UIKit APIs.** Cells use `UIListContentConfiguration.valueCell()` and are reused. That replaces:
+  - five copy-pasted cell setups
+  - `textLabel`, `detailTextLabel` and `imageView`, which are slated for deprecation
+  - a registered cell identifier that was never dequeued
+
+  Setup no longer lives in `loadView()`, and the lines that only restated defaults are gone.
+- **No custom initializers.** The wrapper creates the controller with UIKit's own `init(style: .insetGrouped)` and embeds it in a navigation controller with large titles; the controller sets its "My Account" title in `viewDidLoad`.
+- **Two fixes:**
+  - **Dark mode:** cells no longer override their background. The override made the cards invisible in dark mode.
+  - **Language:** the app is English-only; the row displays "English" directly, without reading bundle preferences or translating a language name.
+- **Unchanged:** the rows, their order, the country placeholder, and the five placeholder actions marked "NO NEED TO TOUCH", which still print their names, byte-for-byte as supplied.
+
+Simple XCTest checks cover the title, section and row counts, row content and icons, and deselection on tap. Settings follows the shared formatting rules too.
+
 ## Tests
 
 The shared Tahudu scheme uses `TestPlans/Tahudu.xctestplan` for the app and package test bundles.
 
-Swift Testing covers:
+Tests cover:
 
 - the listings data layer (data source and repository together, with only HTTP stubbed): endpoint, mapping, rejecting malformed responses, validating IDs, error mapping, private failure logs
 - search, filter and sort rules
@@ -99,6 +119,7 @@ Swift Testing covers:
 - endpoint request building (shared base URL, method, JSON `Accept`, extra headers) and JSON decoding in the client
 - that log messages are private unless marked public
 - the app coordinator
+- the Settings screen with XCTest: title, section and row counts, row text and values, icons and disclosure indicators, and deselection on tap
 
 ## Next steps
 

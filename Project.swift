@@ -29,6 +29,7 @@ let project = Project(
             resources: ["Tahudu/Assets/**", "Tahudu/PrivacyInfo.xcprivacy"],
             dependencies: [
                 .package(product: "Listings"),
+                .package(product: "Settings"),
                 .package(product: "DesignSystem"),
                 .package(product: "Networking"),
                 .package(product: "Logger"),

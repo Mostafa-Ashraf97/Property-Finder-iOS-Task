@@ -7,18 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E74C07649F004551021BA92 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 710808AFB797EB233C0E82B7 /* DesignSystem */; };
+		0E74C07649F004551021BA92 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 3D6FB1EC95AA80829D2E787B /* Settings */; };
 		11F81BB833E3FF53BE6CA1BB /* AppFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA519B0618698B29F136D5E8 /* AppFactory.swift */; };
 		17E51FE5B5FAB71C5B8A44E3 /* TahuduApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BCEABFE67F0643136A3A10 /* TahuduApp.swift */; };
 		1FC471A7D479572D541CED11 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 2090B6EDBA747D42C5546247 /* PrivacyInfo.xcprivacy */; };
 		31CAF0C6E9D89B8E228DDFBD /* TahuduTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC634D691FFBF2010FCFAB5D /* TahuduTests.swift */; };
 		41939DE40ED11E2BC2D7008B /* Listings in Frameworks */ = {isa = PBXBuildFile; productRef = B8F3BB5F5443F6D1CC12736D /* Listings */; };
-		662676D9DB90F738A86D337E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15518926848C0500CDDFA4AB /* SettingsViewController.swift */; };
 		6FA7008A8D2EA88F380E322E /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B915267F8158F97BEC140A4 /* AppCoordinator.swift */; };
-		87EFE4C41CFD781F48A03786 /* Logger in Frameworks */ = {isa = PBXBuildFile; productRef = 3A064F421480A89D792FC490 /* Logger */; };
-		8D68DDDAE884C58A07690E0D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE9C929F2C420D17881A75A /* SettingsView.swift */; };
+		87EFE4C41CFD781F48A03786 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = 34138225F7053175636E69FE /* Networking */; };
 		A640F40B1835F39247ABBCC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63355346939A275DC3F9B76D /* Assets.xcassets */; };
-		D54C8B1F6EB64E6C05D46C47 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = 34138225F7053175636E69FE /* Networking */; };
+		AD9AA27CE212F1994022AE00 /* Logger in Frameworks */ = {isa = PBXBuildFile; productRef = 3A064F421480A89D792FC490 /* Logger */; };
+		D54C8B1F6EB64E6C05D46C47 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 710808AFB797EB233C0E82B7 /* DesignSystem */; };
 		E67E163B3F2173EB6AB20345 /* TahuduTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2859265B8CBAB5E59B7C51 /* TahuduTabView.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,10 +55,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		15518926848C0500CDDFA4AB /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		2090B6EDBA747D42C5546247 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		63355346939A275DC3F9B76D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		6BE9C929F2C420D17881A75A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		71BCEABFE67F0643136A3A10 /* TahuduApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TahuduApp.swift; sourceTree = "<group>"; };
 		7E82ED1345EB17D68D42562E /* Tahudu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tahudu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87DAA7F81EA83AA2B041C162 /* PropertyFinderKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = PropertyFinderKit; path = Packages/PropertyFinderKit; sourceTree = "<group>"; };
@@ -76,9 +73,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				41939DE40ED11E2BC2D7008B /* Listings in Frameworks */,
-				0E74C07649F004551021BA92 /* DesignSystem in Frameworks */,
-				D54C8B1F6EB64E6C05D46C47 /* Networking in Frameworks */,
-				87EFE4C41CFD781F48A03786 /* Logger in Frameworks */,
+				0E74C07649F004551021BA92 /* Settings in Frameworks */,
+				D54C8B1F6EB64E6C05D46C47 /* DesignSystem in Frameworks */,
+				87EFE4C41CFD781F48A03786 /* Networking in Frameworks */,
+				AD9AA27CE212F1994022AE00 /* Logger in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,15 +115,6 @@
 			name = Packages;
 			sourceTree = "<group>";
 		};
-		662A5D3D923A66330C365630 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				6BE9C929F2C420D17881A75A /* SettingsView.swift */,
-				15518926848C0500CDDFA4AB /* SettingsViewController.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
 		7FC77AE70F8378D5BB7B417B /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -133,14 +122,6 @@
 				D923620CC4C9C439E1969CA3 /* TahuduTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		839A53094ECBC09FCEC3FF8F /* Screens */ = {
-			isa = PBXGroup;
-			children = (
-				662A5D3D923A66330C365630 /* Settings */,
-			);
-			path = Screens;
 			sourceTree = "<group>";
 		};
 		999FAB72406650F29A9ECF15 = {
@@ -157,7 +138,6 @@
 			children = (
 				E1E56BB71D0B3EFE5DDE12FD /* App */,
 				FDD3DCFC3550A85E62921954 /* Assets */,
-				839A53094ECBC09FCEC3FF8F /* Screens */,
 				2090B6EDBA747D42C5546247 /* PrivacyInfo.xcprivacy */,
 				71BCEABFE67F0643136A3A10 /* TahuduApp.swift */,
 			);
@@ -222,6 +202,7 @@
 			name = Tahudu;
 			packageProductDependencies = (
 				B8F3BB5F5443F6D1CC12736D /* Listings */,
+				3D6FB1EC95AA80829D2E787B /* Settings */,
 				710808AFB797EB233C0E82B7 /* DesignSystem */,
 				34138225F7053175636E69FE /* Networking */,
 				3A064F421480A89D792FC490 /* Logger */,
@@ -292,8 +273,6 @@
 				6FA7008A8D2EA88F380E322E /* AppCoordinator.swift in Sources */,
 				11F81BB833E3FF53BE6CA1BB /* AppFactory.swift in Sources */,
 				E67E163B3F2173EB6AB20345 /* TahuduTabView.swift in Sources */,
-				8D68DDDAE884C58A07690E0D /* SettingsView.swift in Sources */,
-				662676D9DB90F738A86D337E /* SettingsViewController.swift in Sources */,
 				17E51FE5B5FAB71C5B8A44E3 /* TahuduApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -615,6 +594,10 @@
 		3A064F421480A89D792FC490 /* Logger */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Logger;
+		};
+		3D6FB1EC95AA80829D2E787B /* Settings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Settings;
 		};
 		710808AFB797EB233C0E82B7 /* DesignSystem */ = {
 			isa = XCSwiftPackageProductDependency;

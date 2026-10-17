@@ -2,6 +2,7 @@ import Foundation
 import Listings
 import Logger
 import Networking
+import Settings
 
 /// The composition root: owns the app's shared services and creates each feature's screens from them.
 struct AppFactory {
