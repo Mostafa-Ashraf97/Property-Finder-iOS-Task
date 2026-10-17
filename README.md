@@ -1,5 +1,7 @@
 # Property Finder - Tech Interview
 
+> **Solution notes:** how to run it, what was built and why — see [SOLUTION.md](SOLUTION.md).
+
 Congratulations! 🥳 
 This is a **take‑home coding exercise** for the Property Finder iOS team. 
 You have **up to 3 days** to work through the tasks below at your own pace.
@@ -24,8 +26,6 @@ We put together a very lite version of our beloved Property Finder application, 
 ---
 
 ## Task 1 - Rebuild the following UI in SwiftUI
-
-![Search Screen](Screenshots/SearchScreen.png)
 
 ### Notes
 

@@ -7,59 +7,80 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F479BA626EF162000F863AC /* TahuduApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F479BA526EF162000F863AC /* TahuduApp.swift */; };
-		1F479BAA26EF162400F863AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F479BA926EF162400F863AC /* Assets.xcassets */; };
-		1F479BAD26EF162400F863AC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F479BAC26EF162400F863AC /* Preview Assets.xcassets */; };
-		1F479BB726EF162400F863AC /* TahuduTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F479BB626EF162400F863AC /* TahuduTests.swift */; };
-		1F479BD526EF18B800F863AC /* ClearableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F479BD426EF18B800F863AC /* ClearableTextField.swift */; };
-		1F479BD726EF1A0200F863AC /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F479BD626EF1A0200F863AC /* Colors.swift */; };
-		1F479BD926EF1A9600F863AC /* TahuduTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F479BD826EF1A9600F863AC /* TahuduTabView.swift */; };
-		1F479BDD26EF1AD400F863AC /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F479BDC26EF1AD400F863AC /* SearchView.swift */; };
-		1F479BDF26EF1AE600F863AC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F479BDE26EF1AE600F863AC /* SettingsView.swift */; };
-		1F479BEB26EF333800F863AC /* ContactButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F479BEA26EF333800F863AC /* ContactButton.swift */; };
-		1F479BEE26F06FDD00F863AC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F479BED26F06FDD00F863AC /* SettingsViewController.swift */; };
-		1F566C08272964C6000D4E93 /* ContactType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F566C072729641D000D4E93 /* ContactType.swift */; };
-		1F566C0927296594000D4E93 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F566C05272963EE000D4E93 /* Image.swift */; };
+		0E74C07649F004551021BA92 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 710808AFB797EB233C0E82B7 /* DesignSystem */; };
+		11F81BB833E3FF53BE6CA1BB /* AppFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA519B0618698B29F136D5E8 /* AppFactory.swift */; };
+		17E51FE5B5FAB71C5B8A44E3 /* TahuduApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BCEABFE67F0643136A3A10 /* TahuduApp.swift */; };
+		31CAF0C6E9D89B8E228DDFBD /* TahuduTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC634D691FFBF2010FCFAB5D /* TahuduTests.swift */; };
+		41939DE40ED11E2BC2D7008B /* Listings in Frameworks */ = {isa = PBXBuildFile; productRef = B8F3BB5F5443F6D1CC12736D /* Listings */; };
+		662676D9DB90F738A86D337E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15518926848C0500CDDFA4AB /* SettingsViewController.swift */; };
+		6FA7008A8D2EA88F380E322E /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B915267F8158F97BEC140A4 /* AppCoordinator.swift */; };
+		87EFE4C41CFD781F48A03786 /* Logger in Frameworks */ = {isa = PBXBuildFile; productRef = 3A064F421480A89D792FC490 /* Logger */; };
+		8D68DDDAE884C58A07690E0D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE9C929F2C420D17881A75A /* SettingsView.swift */; };
+		A640F40B1835F39247ABBCC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63355346939A275DC3F9B76D /* Assets.xcassets */; };
+		D54C8B1F6EB64E6C05D46C47 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = 34138225F7053175636E69FE /* Networking */; };
+		E67E163B3F2173EB6AB20345 /* TahuduTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2859265B8CBAB5E59B7C51 /* TahuduTabView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1F479BB326EF162400F863AC /* PBXContainerItemProxy */ = {
+		FF938C1324CEC45E35EFC7F7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 1F479B9A26EF162000F863AC /* Project object */;
+			containerPortal = 81BB22DB62659F5103420AC5 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 1F479BA126EF162000F863AC;
+			remoteGlobalIDString = E66FA1E4C4F84F4A3DBCF7C4;
 			remoteInfo = Tahudu;
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		829A10554567B2FADC31CCEA /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA44AF117F12DD03C0F79840 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		1F479BA226EF162000F863AC /* Tahudu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tahudu.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		1F479BA526EF162000F863AC /* TahuduApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TahuduApp.swift; sourceTree = "<group>"; };
-		1F479BA926EF162400F863AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		1F479BAC26EF162400F863AC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		1F479BB226EF162400F863AC /* TahuduTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TahuduTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1F479BB626EF162400F863AC /* TahuduTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TahuduTests.swift; sourceTree = "<group>"; };
-		1F479BD426EF18B800F863AC /* ClearableTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearableTextField.swift; sourceTree = "<group>"; };
-		1F479BD626EF1A0200F863AC /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		1F479BD826EF1A9600F863AC /* TahuduTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TahuduTabView.swift; sourceTree = "<group>"; };
-		1F479BDC26EF1AD400F863AC /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
-		1F479BDE26EF1AE600F863AC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		1F479BE026EF1D3B00F863AC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
-		1F479BEA26EF333800F863AC /* ContactButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactButton.swift; sourceTree = "<group>"; };
-		1F479BED26F06FDD00F863AC /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		1F566C05272963EE000D4E93 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
-		1F566C072729641D000D4E93 /* ContactType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactType.swift; sourceTree = "<group>"; };
+		15518926848C0500CDDFA4AB /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		63355346939A275DC3F9B76D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6BE9C929F2C420D17881A75A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		71BCEABFE67F0643136A3A10 /* TahuduApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TahuduApp.swift; sourceTree = "<group>"; };
+		7E82ED1345EB17D68D42562E /* Tahudu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tahudu.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		87DAA7F81EA83AA2B041C162 /* PropertyFinderKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = PropertyFinderKit; path = Packages/PropertyFinderKit; sourceTree = "<group>"; };
+		8B915267F8158F97BEC140A4 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		AC634D691FFBF2010FCFAB5D /* TahuduTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TahuduTests.swift; sourceTree = "<group>"; };
+		BA519B0618698B29F136D5E8 /* AppFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFactory.swift; sourceTree = "<group>"; };
+		D923620CC4C9C439E1969CA3 /* TahuduTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TahuduTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA2859265B8CBAB5E59B7C51 /* TahuduTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TahuduTabView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		1F479B9F26EF162000F863AC /* Frameworks */ = {
+		3F807F9C21B240F70E14E80B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41939DE40ED11E2BC2D7008B /* Listings in Frameworks */,
+				0E74C07649F004551021BA92 /* DesignSystem in Frameworks */,
+				D54C8B1F6EB64E6C05D46C47 /* Networking in Frameworks */,
+				87EFE4C41CFD781F48A03786 /* Logger in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1F479BAF26EF162400F863AC /* Frameworks */ = {
+		8BF9E2FADFD0C6AAF8A50368 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -69,219 +90,188 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1F479B9926EF162000F863AC = {
+		22E2E790DFDD9B92369D47D3 /* Project */ = {
 			isa = PBXGroup;
 			children = (
-				1F479BE026EF1D3B00F863AC /* README.md */,
-				1F479BA426EF162000F863AC /* Tahudu */,
-				1F479BB526EF162400F863AC /* TahuduTests */,
-				1F479BA326EF162000F863AC /* Products */,
+				BF5B4DB170335EE6A362EE97 /* Tahudu */,
+				4714B785874EAE100576FF08 /* TahuduTests */,
 			);
+			name = Project;
 			sourceTree = "<group>";
 		};
-		1F479BA326EF162000F863AC /* Products */ = {
+		4714B785874EAE100576FF08 /* TahuduTests */ = {
 			isa = PBXGroup;
 			children = (
-				1F479BA226EF162000F863AC /* Tahudu.app */,
-				1F479BB226EF162400F863AC /* TahuduTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		1F479BA426EF162000F863AC /* Tahudu */ = {
-			isa = PBXGroup;
-			children = (
-				1F479BD226EF181900F863AC /* Components */,
-				1F479BD026EF17F600F863AC /* Assets */,
-				1F479BCF26EF17EC00F863AC /* Extensions */,
-				1F566C0627296406000D4E93 /* Models */,
-				1F479BD126EF180500F863AC /* Screens */,
-				1F479BAB26EF162400F863AC /* Preview Content */,
-				1F479BA526EF162000F863AC /* TahuduApp.swift */,
-				1F479BD826EF1A9600F863AC /* TahuduTabView.swift */,
-			);
-			path = Tahudu;
-			sourceTree = "<group>";
-		};
-		1F479BAB26EF162400F863AC /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				1F479BAC26EF162400F863AC /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		1F479BB526EF162400F863AC /* TahuduTests */ = {
-			isa = PBXGroup;
-			children = (
-				1F479BB626EF162400F863AC /* TahuduTests.swift */,
+				AC634D691FFBF2010FCFAB5D /* TahuduTests.swift */,
 			);
 			path = TahuduTests;
 			sourceTree = "<group>";
 		};
-		1F479BCF26EF17EC00F863AC /* Extensions */ = {
+		484D4C67DF1899498CEA1D65 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				1F566C05272963EE000D4E93 /* Image.swift */,
+				87DAA7F81EA83AA2B041C162 /* PropertyFinderKit */,
 			);
-			path = Extensions;
+			name = Packages;
 			sourceTree = "<group>";
 		};
-		1F479BD026EF17F600F863AC /* Assets */ = {
+		662A5D3D923A66330C365630 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				1F479BA926EF162400F863AC /* Assets.xcassets */,
-				1F479BD626EF1A0200F863AC /* Colors.swift */,
-			);
-			path = Assets;
-			sourceTree = "<group>";
-		};
-		1F479BD126EF180500F863AC /* Screens */ = {
-			isa = PBXGroup;
-			children = (
-				1F479BDA26EF1AB100F863AC /* Search */,
-				1F479BDB26EF1AB900F863AC /* Settings */,
-			);
-			path = Screens;
-			sourceTree = "<group>";
-		};
-		1F479BD226EF181900F863AC /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				1F479BE926EF332E00F863AC /* Buttons */,
-				1F479BD326EF182600F863AC /* TextFields */,
-			);
-			path = Components;
-			sourceTree = "<group>";
-		};
-		1F479BD326EF182600F863AC /* TextFields */ = {
-			isa = PBXGroup;
-			children = (
-				1F479BD426EF18B800F863AC /* ClearableTextField.swift */,
-			);
-			path = TextFields;
-			sourceTree = "<group>";
-		};
-		1F479BDA26EF1AB100F863AC /* Search */ = {
-			isa = PBXGroup;
-			children = (
-				1F479BDC26EF1AD400F863AC /* SearchView.swift */,
-			);
-			path = Search;
-			sourceTree = "<group>";
-		};
-		1F479BDB26EF1AB900F863AC /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				1F479BDE26EF1AE600F863AC /* SettingsView.swift */,
-				1F479BED26F06FDD00F863AC /* SettingsViewController.swift */,
+				6BE9C929F2C420D17881A75A /* SettingsView.swift */,
+				15518926848C0500CDDFA4AB /* SettingsViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		1F479BE926EF332E00F863AC /* Buttons */ = {
+		7FC77AE70F8378D5BB7B417B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1F479BEA26EF333800F863AC /* ContactButton.swift */,
+				7E82ED1345EB17D68D42562E /* Tahudu.app */,
+				D923620CC4C9C439E1969CA3 /* TahuduTests.xctest */,
 			);
-			path = Buttons;
+			name = Products;
 			sourceTree = "<group>";
 		};
-		1F566C0627296406000D4E93 /* Models */ = {
+		839A53094ECBC09FCEC3FF8F /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				1F566C072729641D000D4E93 /* ContactType.swift */,
+				662A5D3D923A66330C365630 /* Settings */,
 			);
-			path = Models;
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		999FAB72406650F29A9ECF15 = {
+			isa = PBXGroup;
+			children = (
+				7FC77AE70F8378D5BB7B417B /* Products */,
+				22E2E790DFDD9B92369D47D3 /* Project */,
+				484D4C67DF1899498CEA1D65 /* Packages */,
+			);
+			sourceTree = "<group>";
+		};
+		BF5B4DB170335EE6A362EE97 /* Tahudu */ = {
+			isa = PBXGroup;
+			children = (
+				E1E56BB71D0B3EFE5DDE12FD /* App */,
+				FDD3DCFC3550A85E62921954 /* Assets */,
+				839A53094ECBC09FCEC3FF8F /* Screens */,
+				71BCEABFE67F0643136A3A10 /* TahuduApp.swift */,
+			);
+			path = Tahudu;
+			sourceTree = "<group>";
+		};
+		E1E56BB71D0B3EFE5DDE12FD /* App */ = {
+			isa = PBXGroup;
+			children = (
+				8B915267F8158F97BEC140A4 /* AppCoordinator.swift */,
+				BA519B0618698B29F136D5E8 /* AppFactory.swift */,
+				EA2859265B8CBAB5E59B7C51 /* TahuduTabView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		FDD3DCFC3550A85E62921954 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				63355346939A275DC3F9B76D /* Assets.xcassets */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1F479BA126EF162000F863AC /* Tahudu */ = {
+		2AD44D7DFEC70D16D615804A /* TahuduTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1F479BC626EF162400F863AC /* Build configuration list for PBXNativeTarget "Tahudu" */;
+			buildConfigurationList = 9A4314638589964ED2E86446 /* Build configuration list for PBXNativeTarget "TahuduTests" */;
 			buildPhases = (
-				1F479B9E26EF162000F863AC /* Sources */,
-				1F479B9F26EF162000F863AC /* Frameworks */,
-				1F479BA026EF162000F863AC /* Resources */,
+				809CAB4B85B8F26E60EDEA42 /* Sources */,
+				8E9A3647D4E14188097F3C61 /* Resources */,
+				8BF9E2FADFD0C6AAF8A50368 /* Frameworks */,
+				EA44AF117F12DD03C0F79840 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CCC0E079E722C076B193E6AE /* PBXTargetDependency */,
+			);
+			name = TahuduTests;
+			packageProductDependencies = (
+			);
+			productName = TahuduTests;
+			productReference = D923620CC4C9C439E1969CA3 /* TahuduTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E66FA1E4C4F84F4A3DBCF7C4 /* Tahudu */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DCFB6CC98F50E584AD54C229 /* Build configuration list for PBXNativeTarget "Tahudu" */;
+			buildPhases = (
+				7E205DB2FB2781DE8B659839 /* Sources */,
+				6A7E013443B071FCBE47D0DE /* Resources */,
+				3F807F9C21B240F70E14E80B /* Frameworks */,
+				829A10554567B2FADC31CCEA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Tahudu;
+			packageProductDependencies = (
+				B8F3BB5F5443F6D1CC12736D /* Listings */,
+				710808AFB797EB233C0E82B7 /* DesignSystem */,
+				34138225F7053175636E69FE /* Networking */,
+				3A064F421480A89D792FC490 /* Logger */,
+			);
 			productName = Tahudu;
-			productReference = 1F479BA226EF162000F863AC /* Tahudu.app */;
+			productReference = 7E82ED1345EB17D68D42562E /* Tahudu.app */;
 			productType = "com.apple.product-type.application";
-		};
-		1F479BB126EF162400F863AC /* TahuduTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 1F479BC926EF162400F863AC /* Build configuration list for PBXNativeTarget "TahuduTests" */;
-			buildPhases = (
-				1F479BAE26EF162400F863AC /* Sources */,
-				1F479BAF26EF162400F863AC /* Frameworks */,
-				1F479BB026EF162400F863AC /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				1F479BB426EF162400F863AC /* PBXTargetDependency */,
-			);
-			name = TahuduTests;
-			productName = TahuduTests;
-			productReference = 1F479BB226EF162400F863AC /* TahuduTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		1F479B9A26EF162000F863AC /* Project object */ = {
+		81BB22DB62659F5103420AC5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1300;
+				BuildIndependentTargetsInParallel = YES;
 				TargetAttributes = {
-					1F479BA126EF162000F863AC = {
-						CreatedOnToolsVersion = 13.0;
-					};
-					1F479BB126EF162400F863AC = {
-						CreatedOnToolsVersion = 13.0;
-						TestTargetID = 1F479BA126EF162000F863AC;
+					2AD44D7DFEC70D16D615804A = {
+						TestTargetID = E66FA1E4C4F84F4A3DBCF7C4;
 					};
 				};
 			};
-			buildConfigurationList = 1F479B9D26EF162000F863AC /* Build configuration list for PBXProject "Tahudu" */;
-			compatibilityVersion = "Xcode 13.0";
+			buildConfigurationList = 17EFE99C028A7E9CB502B53B /* Build configuration list for PBXProject "Tahudu" */;
+			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				en,
 			);
-			mainGroup = 1F479B9926EF162000F863AC;
-			productRefGroup = 1F479BA326EF162000F863AC /* Products */;
+			mainGroup = 999FAB72406650F29A9ECF15;
+			packageReferences = (
+				460DF26EF3E34B7265540427 /* XCLocalSwiftPackageReference "Packages/PropertyFinderKit" */,
+			);
+			productRefGroup = 7FC77AE70F8378D5BB7B417B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1F479BA126EF162000F863AC /* Tahudu */,
-				1F479BB126EF162400F863AC /* TahuduTests */,
+				E66FA1E4C4F84F4A3DBCF7C4 /* Tahudu */,
+				2AD44D7DFEC70D16D615804A /* TahuduTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		1F479BA026EF162000F863AC /* Resources */ = {
+		6A7E013443B071FCBE47D0DE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F479BAD26EF162400F863AC /* Preview Assets.xcassets in Resources */,
-				1F479BAA26EF162400F863AC /* Assets.xcassets in Resources */,
+				A640F40B1835F39247ABBCC2 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1F479BB026EF162400F863AC /* Resources */ = {
+		8E9A3647D4E14188097F3C61 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -291,49 +281,171 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		1F479B9E26EF162000F863AC /* Sources */ = {
+		7E205DB2FB2781DE8B659839 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F479BDD26EF1AD400F863AC /* SearchView.swift in Sources */,
-				1F479BD726EF1A0200F863AC /* Colors.swift in Sources */,
-				1F479BD526EF18B800F863AC /* ClearableTextField.swift in Sources */,
-				1F479BDF26EF1AE600F863AC /* SettingsView.swift in Sources */,
-				1F479BA626EF162000F863AC /* TahuduApp.swift in Sources */,
-				1F566C08272964C6000D4E93 /* ContactType.swift in Sources */,
-				1F479BD926EF1A9600F863AC /* TahuduTabView.swift in Sources */,
-				1F479BEB26EF333800F863AC /* ContactButton.swift in Sources */,
-				1F479BEE26F06FDD00F863AC /* SettingsViewController.swift in Sources */,
-				1F566C0927296594000D4E93 /* Image.swift in Sources */,
+				6FA7008A8D2EA88F380E322E /* AppCoordinator.swift in Sources */,
+				11F81BB833E3FF53BE6CA1BB /* AppFactory.swift in Sources */,
+				E67E163B3F2173EB6AB20345 /* TahuduTabView.swift in Sources */,
+				8D68DDDAE884C58A07690E0D /* SettingsView.swift in Sources */,
+				662676D9DB90F738A86D337E /* SettingsViewController.swift in Sources */,
+				17E51FE5B5FAB71C5B8A44E3 /* TahuduApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1F479BAE26EF162400F863AC /* Sources */ = {
+		809CAB4B85B8F26E60EDEA42 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F479BB726EF162400F863AC /* TahuduTests.swift in Sources */,
+				31CAF0C6E9D89B8E228DDFBD /* TahuduTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		1F479BB426EF162400F863AC /* PBXTargetDependency */ = {
+		CCC0E079E722C076B193E6AE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1F479BA126EF162000F863AC /* Tahudu */;
-			targetProxy = 1F479BB326EF162400F863AC /* PBXContainerItemProxy */;
+			name = Tahudu;
+			target = E66FA1E4C4F84F4A3DBCF7C4 /* Tahudu */;
+			targetProxy = FF938C1324CEC45E35EFC7F7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		1F479BC426EF162400F863AC /* Debug */ = {
+		1CBF78EEB8A12C90A00275B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ae.propertyfinder.Tahudu;
+				PRODUCT_NAME = Tahudu;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		1E260EB2EEDD0BC8B40CD095 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ae.propertyfinder.Tahudu;
+				PRODUCT_NAME = Tahudu;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
+					"$(inherited)",
+					DEBUG,
+				);
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		71D7A238A6F6741163EE12C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ae.propertyfinder.TahuduTests;
+				PRODUCT_NAME = TahuduTests;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
+					"$(inherited)",
+					DEBUG,
+				);
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tahudu.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tahudu";
+				TEST_TARGET_NAME = Tahudu;
+			};
+			name = Debug;
+		};
+		9AE1247A9EBD7668A77CBE3D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ae.propertyfinder.TahuduTests;
+				PRODUCT_NAME = TahuduTests;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tahudu.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tahudu";
+				TEST_TARGET_NAME = Tahudu;
+			};
+			name = Release;
+		};
+		CA25E4654CF17F1FB842046D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -360,7 +472,10 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -378,23 +493,25 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = NO;
+				SWIFT_UPCOMING_FEATURE_NONISOLATED_NONSENDING_BY_DEFAULT = NO;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
-		1F479BC526EF162400F863AC /* Release */ = {
+		F41D5E1A86571570391B2EFB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -421,7 +538,10 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -433,157 +553,74 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = NO;
+				SWIFT_UPCOMING_FEATURE_NONISOLATED_NONSENDING_BY_DEFAULT = NO;
+				SWIFT_VERSION = 6.0;
 				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		1F479BC726EF162400F863AC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = Accent;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Tahudu/Preview Content\"";
-				DEVELOPMENT_TEAM = ZC869D3D9T;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ae.propertyfinder.Tahudu;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		1F479BC826EF162400F863AC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = Accent;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Tahudu/Preview Content\"";
-				DEVELOPMENT_TEAM = ZC869D3D9T;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ae.propertyfinder.Tahudu;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		1F479BCA26EF162400F863AC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZC869D3D9T;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ae.propertyfinder.TahuduTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tahudu.app/Tahudu";
-			};
-			name = Debug;
-		};
-		1F479BCB26EF162400F863AC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZC869D3D9T;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ae.propertyfinder.TahuduTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tahudu.app/Tahudu";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1F479B9D26EF162000F863AC /* Build configuration list for PBXProject "Tahudu" */ = {
+		17EFE99C028A7E9CB502B53B /* Build configuration list for PBXProject "Tahudu" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1F479BC426EF162400F863AC /* Debug */,
-				1F479BC526EF162400F863AC /* Release */,
+				CA25E4654CF17F1FB842046D /* Debug */,
+				F41D5E1A86571570391B2EFB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1F479BC626EF162400F863AC /* Build configuration list for PBXNativeTarget "Tahudu" */ = {
+		9A4314638589964ED2E86446 /* Build configuration list for PBXNativeTarget "TahuduTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1F479BC726EF162400F863AC /* Debug */,
-				1F479BC826EF162400F863AC /* Release */,
+				71D7A238A6F6741163EE12C7 /* Debug */,
+				9AE1247A9EBD7668A77CBE3D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1F479BC926EF162400F863AC /* Build configuration list for PBXNativeTarget "TahuduTests" */ = {
+		DCFB6CC98F50E584AD54C229 /* Build configuration list for PBXNativeTarget "Tahudu" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1F479BCA26EF162400F863AC /* Debug */,
-				1F479BCB26EF162400F863AC /* Release */,
+				1E260EB2EEDD0BC8B40CD095 /* Debug */,
+				1CBF78EEB8A12C90A00275B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		460DF26EF3E34B7265540427 /* XCLocalSwiftPackageReference "Packages/PropertyFinderKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/PropertyFinderKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		34138225F7053175636E69FE /* Networking */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Networking;
+		};
+		3A064F421480A89D792FC490 /* Logger */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Logger;
+		};
+		710808AFB797EB233C0E82B7 /* DesignSystem */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DesignSystem;
+		};
+		B8F3BB5F5443F6D1CC12736D /* Listings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Listings;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = 1F479B9A26EF162000F863AC /* Project object */;
+	rootObject = 81BB22DB62659F5103420AC5 /* Project object */;
 }

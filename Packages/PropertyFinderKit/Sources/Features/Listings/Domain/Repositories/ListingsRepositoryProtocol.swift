@@ -1,0 +1,3 @@
+protocol ListingsRepositoryProtocol: Sendable {
+    func fetchListings() async throws -> [Listing]
+}

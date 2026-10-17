@@ -3,29 +3,28 @@
 //  TahuduTests
 //
 
-import XCTest
 @testable import Tahudu
+import Testing
 
-class TahuduTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+@MainActor
+struct AppCoordinatorTests {
+    @Test func startsOnListings() {
+        #expect(makeCoordinator().selectedTab == .listings)
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    @Test func tracksTheSelectedTab() {
+        let coordinator = makeCoordinator()
+
+        coordinator.selectedTab = .settings
+
+        #expect(coordinator.selectedTab == .settings)
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    @Test func listsTabsInDisplayOrder() {
+        #expect(AppTab.allCases.map(\.title) == ["Search", "My Account"])
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    private func makeCoordinator() -> AppCoordinator {
+        AppCoordinator(factory: AppFactory())
     }
-
 }
