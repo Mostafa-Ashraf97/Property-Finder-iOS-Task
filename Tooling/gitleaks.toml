@@ -1,0 +1,13 @@
+title = "Property Finder secret scanning"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Generated output and local tool metadata"
+paths = [
+  '''(^|/)\.git/''',
+  '''(^|/)\.build/''',
+  '''(^|/)\.bundle/''',
+  '''^build/''',
+]

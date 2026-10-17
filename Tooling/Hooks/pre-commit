@@ -1,0 +1,40 @@
+#!/bin/bash
+# Lints staged Swift files and scans staged changes for secrets. Only real findings block a commit:
+# when the tools themselves are unavailable, the checks are skipped and CI still runs them.
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+
+# Apps launched from the Dock (Xcode, Fork, Tower) run hooks without Homebrew in PATH.
+find_mise() {
+    command -v mise && return
+    for candidate in /opt/homebrew/bin/mise /usr/local/bin/mise "$HOME/.local/bin/mise"; do
+        if [ -x "$candidate" ]; then
+            echo "$candidate"
+            return
+        fi
+    done
+    return 1
+}
+
+skip() {
+    echo "pre-commit: $1, so local checks are skipped. CI still runs them." >&2
+    exit 0
+}
+
+mise=$(find_mise) || skip "mise was not found"
+"$mise" exec -- swiftformat --version >/dev/null 2>&1 || skip "SwiftFormat is unavailable"
+"$mise" exec -- gitleaks version >/dev/null 2>&1 || skip "Gitleaks is unavailable"
+
+status=0
+echo "Checking staged Swift formatting..."
+while IFS= read -r -d '' file; do
+    # The config's exclusions also apply to --stdin-path.
+    if ! git show ":$file" | "$mise" exec -- swiftformat stdin --lint \
+        --stdin-path "$file" --config Tooling/.swiftformat; then
+        status=1
+    fi
+done < <(git diff --cached --name-only --diff-filter=ACMR -z -- '*.swift')
+
+echo "Checking staged files for secrets..."
+"$mise" exec -- gitleaks git --staged --config Tooling/gitleaks.toml --redact --no-banner || status=1
+exit "$status"

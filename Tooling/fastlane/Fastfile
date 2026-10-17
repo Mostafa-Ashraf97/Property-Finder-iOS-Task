@@ -1,0 +1,58 @@
+require "fileutils"
+
+skip_docs
+opt_out_usage
+default_platform(:ios)
+
+project = File.expand_path("../../Tahudu.xcodeproj", __dir__)
+output = File.expand_path("../../build", __dir__)
+FileUtils.mkdir_p(output)
+ENV["FL_REPORT_PATH"] = output
+
+platform :ios do
+  desc "Build an unsigned simulator app (Release by default)"
+  lane :build do |options|
+    configuration = options[:configuration] || "Release"
+    UI.user_error!("Use configuration:Debug or configuration:Release") unless %w[Debug Release].include?(configuration)
+
+    build_app(
+      project: project,
+      scheme: "Tahudu",
+      configuration: configuration,
+      sdk: "iphonesimulator",
+      destination: "generic/platform=iOS Simulator",
+      derived_data_path: File.join(output, "DerivedData"),
+      skip_archive: true,
+      skip_package_ipa: true,
+      skip_codesigning: true,
+      buildlog_path: File.join(output, "logs", configuration),
+      xcodebuild_formatter: "",
+      suppress_xcode_output: true
+    )
+  end
+
+  desc "Build and run the app and Swift-package tests on iPhone 17"
+  lane :test do |options|
+    run_tests(
+      project: project,
+      scheme: "Tahudu",
+      testplan: "Tahudu",
+      configuration: "Debug",
+      device: options[:device] || "iPhone 17 (26.2)",
+      ensure_devices_found: true,
+      skip_slack: true,
+      derived_data_path: File.join(output, "DerivedData"),
+      result_bundle: true,
+      output_directory: File.join(output, "tests"),
+      buildlog_path: File.join(output, "logs", "Tests"),
+      xcodebuild_formatter: "",
+      suppress_xcode_output: true
+    )
+  end
+
+  desc "Run Debug tests, then build Release"
+  lane :ci do
+    test
+    build
+  end
+end

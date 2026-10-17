@@ -1,0 +1,10 @@
+--swift-version 6.2
+--language-mode 6
+--indent 4
+--maxwidth 130
+--wraparguments before-first
+--wrapparameters before-first
+--trailing-commas collections-only
+--test-case-name-format standard-identifiers
+--disable redundantMemberwiseInit,redundantVariable
+--exclude ../.git,../.build,../.bundle,../build,../Tahudu/Screens/Settings

@@ -4,8 +4,8 @@
 
 - Xcode 26 or newer, iOS 26 simulator.
 - Open `Tahudu.xcodeproj`, select the **Tahudu** scheme and an iPhone simulator, and press ⌘R. ⌘U runs all tests.
-- Nothing to install or configure. The build runs no scripts and downloads no packages. To run on a physical device, choose your own team under Signing & Capabilities.
-- No third-party app libraries. The project, shared scheme and root test plan are included.
+- Nothing to install or configure. The build runs no scripts and downloads no packages, and no Git hooks are active in a fresh clone. To run on a physical device, choose your own team under Signing & Capabilities.
+- No third-party app libraries. The Tuist-generated project is included, so generation and tooling installation are optional for reviewers. Contributor setup, version pins, hooks, Fastlane and CI are described in [Tooling/README.md](Tooling/README.md).
 
 ## What's implemented
 

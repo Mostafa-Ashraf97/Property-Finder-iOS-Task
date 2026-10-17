@@ -1,0 +1,67 @@
+name: iOS checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: macos-26
+    timeout-minutes: 40
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+      BUNDLE_FROZEN: "true"
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Set up tools
+        uses: jdx/mise-action@5228313ee0372e111a38da051671ca30fc5a96db # v3
+        with:
+          version: "2026.10.11"
+
+      - name: Check formatting
+        run: swiftformat . --config Tooling/.swiftformat --lint
+
+      - name: Scan secrets
+        run: gitleaks git . --log-opts=--all --config Tooling/gitleaks.toml --redact --no-banner
+
+      - name: Verify the included Xcode project is current
+        run: |
+          tuist generate --no-open
+          # Unlike `git diff`, `git status` also reports files the generator adds.
+          changes=$(git status --porcelain -- Tahudu.xcodeproj)
+          if [ -n "$changes" ]; then
+            echo "::error::Tahudu.xcodeproj is out of date. Run 'tuist generate' and commit the result."
+            echo "$changes"
+            git diff -- Tahudu.xcodeproj
+            exit 1
+          fi
+
+      - name: Test Debug and build Release
+        working-directory: Tooling
+        run: |
+          bundle install
+          bundle exec fastlane ios ci
+
+      - name: Upload diagnostics
+        if: ${{ always() }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: ios-results
+          path: |
+            build/logs/
+            build/tests/
+          if-no-files-found: ignore
+          retention-days: 7

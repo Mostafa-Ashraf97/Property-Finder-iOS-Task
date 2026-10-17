@@ -1,0 +1,5 @@
+[tools]
+ruby = "3.4.10"
+tuist = "4.115.1"
+swiftformat = "0.63.1"
+gitleaks = "8.30.1"

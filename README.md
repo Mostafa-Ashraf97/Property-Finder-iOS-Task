@@ -1,6 +1,7 @@
 # Property Finder - Tech Interview
 
 > **Solution notes:** how to run it, what was built and why — see [SOLUTION.md](SOLUTION.md).
+> Open `Tahudu.xcodeproj` directly in Xcode 26+. The generated project is included; Tuist and other developer tools are optional for reviewers.
 
 Congratulations! 🥳 
 This is a **take‑home coding exercise** for the Property Finder iOS team. 
