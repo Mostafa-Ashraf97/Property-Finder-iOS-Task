@@ -33,6 +33,7 @@ let project = Project(
                 .package(product: "DesignSystem"),
                 .package(product: "Networking"),
                 .package(product: "Logger"),
+                .package(product: "Services"),
             ],
             settings: .settings(base: [
                 "SWIFT_DEFAULT_ACTOR_ISOLATION": "MainActor",

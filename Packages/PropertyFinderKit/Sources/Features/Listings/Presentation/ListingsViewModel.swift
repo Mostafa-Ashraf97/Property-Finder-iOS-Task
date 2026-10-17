@@ -3,11 +3,14 @@ import Foundation
 import Logger
 import Networking
 import Observation
+import Services
 
 @MainActor
 protocol ListingsViewModelProtocol: AnyObject, Observable {
     var state: ListingsViewState { get }
     var criteria: ListingSearchCriteria { get set }
+    var isFilterEnabled: Bool { get }
+    var isSortEnabled: Bool { get }
     var resultsSummary: String? { get }
     var availablePropertyTypes: [String] { get }
     var availableBedroomCounts: [Int] { get }
@@ -45,6 +48,7 @@ final class ListingsViewModel {
     private let toggleFavouriteUseCase: any ToggleFavouriteUseCaseProtocol
     private let queryListingsUseCase: any QueryListingsUseCaseProtocol
     private let networkMonitor: any NetworkMonitorProtocol
+    private let featureFlags: any FeatureFlagProviderProtocol
     private let logger: any LoggerProtocol
 
     init(
@@ -53,6 +57,7 @@ final class ListingsViewModel {
         toggleFavouriteUseCase: any ToggleFavouriteUseCaseProtocol,
         queryListingsUseCase: any QueryListingsUseCaseProtocol,
         networkMonitor: any NetworkMonitorProtocol,
+        featureFlags: any FeatureFlagProviderProtocol,
         logger: any LoggerProtocol
     ) {
         self.fetchListingsUseCase = fetchListingsUseCase
@@ -60,6 +65,7 @@ final class ListingsViewModel {
         self.toggleFavouriteUseCase = toggleFavouriteUseCase
         self.queryListingsUseCase = queryListingsUseCase
         self.networkMonitor = networkMonitor
+        self.featureFlags = featureFlags
         self.logger = logger
     }
 
@@ -120,6 +126,14 @@ final class ListingsViewModel {
 }
 
 extension ListingsViewModel: ListingsViewModelProtocol {
+    var isFilterEnabled: Bool {
+        featureFlags.isEnabled(.listingsFiltersEnabled, defaultValue: false)
+    }
+
+    var isSortEnabled: Bool {
+        featureFlags.isEnabled(.listingsSortEnabled, defaultValue: false)
+    }
+
     var resultsSummary: String? {
         let isNarrowed = criteria.favouritesOnly || !criteria.text.isBlank || criteria.filters.activeCount > 0
         guard isNarrowed, hasLoaded else { return nil }

@@ -1,6 +1,7 @@
 import Foundation
 import Logger
 import Networking
+import Services
 
 @MainActor
 public struct ListingsFactory {
@@ -8,17 +9,23 @@ public struct ListingsFactory {
     private let defaults: UserDefaults
     private let logger: LoggerProtocol
     private let networkMonitor: any NetworkMonitorProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let analyticsTracker: any AnalyticsTrackerProtocol
 
     public init(
         httpClient: any HTTPClientProtocol,
         defaults: UserDefaults,
         logger: LoggerProtocol,
-        networkMonitor: any NetworkMonitorProtocol
+        networkMonitor: any NetworkMonitorProtocol,
+        featureFlagProvider: any FeatureFlagProviderProtocol,
+        analyticsTracker: any AnalyticsTrackerProtocol
     ) {
         self.httpClient = httpClient
         self.defaults = defaults
         self.logger = logger
         self.networkMonitor = networkMonitor
+        self.featureFlagProvider = featureFlagProvider
+        self.analyticsTracker = analyticsTracker
     }
 
     public func makeListingsView() -> ListingsView {
@@ -41,10 +48,10 @@ public struct ListingsFactory {
             toggleFavouriteUseCase: toggleFavouriteUseCase,
             queryListingsUseCase: queryListingsUseCase,
             networkMonitor: networkMonitor,
+            featureFlags: featureFlagProvider,
             logger: logger
         )
-        let listingView = ListingsView(viewModel: viewModel)
-
-        return listingView
+        let decoratedViewModel = ListingsViewModelAnalyticsDecorator(decoratee: viewModel, tracker: analyticsTracker)
+        return ListingsView(viewModel: decoratedViewModel)
     }
 }

@@ -18,7 +18,7 @@ public struct ListingsView: View {
                 SearchHeader(
                     viewModel: viewModel,
                     isSearchFocused: $isSearchFocused,
-                    onShowFilters: { isShowingFilters = true }
+                    onShowFilters: { isShowingFilters = viewModel.isFilterEnabled }
                 )
             }
             .background(Color(uiColor: .systemBackground))

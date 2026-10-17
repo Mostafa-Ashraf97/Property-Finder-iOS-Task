@@ -2,6 +2,7 @@ import Foundation
 import Listings
 import Logger
 import Networking
+import Services
 import Settings
 
 /// The composition root: owns the app's shared services and creates each feature's screens from them.
@@ -12,11 +13,15 @@ struct AppFactory {
     private let networkMonitor: any NetworkMonitorProtocol = NetworkMonitor()
 
     func makeListingsView() -> ListingsView {
+        let featureFlagProvider = LocalFeatureFlagProvider()
+        let analyticsTracker = LoggingAnalytics(logger: logger)
         let listingFactory = ListingsFactory(
             httpClient: httpClient,
             defaults: defaults,
             logger: logger,
-            networkMonitor: networkMonitor
+            networkMonitor: networkMonitor,
+            featureFlagProvider: featureFlagProvider,
+            analyticsTracker: analyticsTracker
         )
         let view = listingFactory.makeListingsView()
 

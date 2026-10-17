@@ -10,10 +10,12 @@ let package = Package(
         .library(name: "DesignSystem", targets: ["DesignSystem"]),
         .library(name: "Networking", targets: ["Networking"]),
         .library(name: "Logger", targets: ["Logger"]),
+        .library(name: "Services", targets: ["Services"]),
     ],
     targets: [
         .target(name: "Networking"),
         .target(name: "Logger"),
+        .target(name: "Services", dependencies: ["Logger"]),
         .target(name: "Extensions"),
         .target(
             name: "DesignSystem",
@@ -23,7 +25,7 @@ let package = Package(
 
         .target(
             name: "Listings",
-            dependencies: ["Networking", "Logger", "Extensions", "DesignSystem"],
+            dependencies: ["Networking", "Logger", "Services", "Extensions", "DesignSystem"],
             path: "Sources/Features/Listings"
         ),
         .target(

@@ -25,6 +25,8 @@ final class ListingsViewModelMock: ListingsViewModelProtocol {
     let resultsSummary: String? = nil
     let refreshMessage: String? = nil
     let isShowingSavedListings = false
+    let isFilterEnabled = true
+    let isSortEnabled = true
     let availablePropertyTypes = ["Apartment"]
     let availableBedroomCounts = [1]
 

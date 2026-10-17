@@ -17,6 +17,7 @@
 		A640F40B1835F39247ABBCC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63355346939A275DC3F9B76D /* Assets.xcassets */; };
 		AD9AA27CE212F1994022AE00 /* Logger in Frameworks */ = {isa = PBXBuildFile; productRef = 3A064F421480A89D792FC490 /* Logger */; };
 		D54C8B1F6EB64E6C05D46C47 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 710808AFB797EB233C0E82B7 /* DesignSystem */; };
+		E38122947309E30A3A13E861 /* Services in Frameworks */ = {isa = PBXBuildFile; productRef = F7748D0BCC97811A3E707C64 /* Services */; };
 		E67E163B3F2173EB6AB20345 /* TahuduTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2859265B8CBAB5E59B7C51 /* TahuduTabView.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,7 @@
 				D54C8B1F6EB64E6C05D46C47 /* DesignSystem in Frameworks */,
 				87EFE4C41CFD781F48A03786 /* Networking in Frameworks */,
 				AD9AA27CE212F1994022AE00 /* Logger in Frameworks */,
+				E38122947309E30A3A13E861 /* Services in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,6 +149,7 @@
 				710808AFB797EB233C0E82B7 /* DesignSystem */,
 				34138225F7053175636E69FE /* Networking */,
 				3A064F421480A89D792FC490 /* Logger */,
+				F7748D0BCC97811A3E707C64 /* Services */,
 			);
 			productName = Tahudu;
 			productReference = 7E82ED1345EB17D68D42562E /* Tahudu.app */;
@@ -452,6 +455,10 @@
 		B8F3BB5F5443F6D1CC12736D /* Listings */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Listings;
+		};
+		F7748D0BCC97811A3E707C64 /* Services */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Services;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

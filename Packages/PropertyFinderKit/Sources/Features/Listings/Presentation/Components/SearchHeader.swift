@@ -21,8 +21,12 @@ struct SearchHeader: View {
 
     private var controls: some View {
         HStack(spacing: Spacing.pt24) {
-            filtersButton
-            sortMenu
+            if viewModel.isFilterEnabled {
+                filtersButton
+            }
+            if viewModel.isSortEnabled {
+                sortMenu
+            }
             Spacer(minLength: 0)
             favouritesButton
         }
