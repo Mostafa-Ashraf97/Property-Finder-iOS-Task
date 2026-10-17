@@ -30,6 +30,19 @@ struct ListingsContent: View {
                     .id(Self.topAnchor)
 
                 Group {
+                    if viewModel.isShowingSavedListings {
+                        Label {
+                            Text("You appear to be offline. Showing saved properties.")
+                        } icon: {
+                            Image(systemName: "wifi.slash")
+                        }
+                        .font(.detail)
+                        .foregroundStyle(Color.primaryText)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(Spacing.pt12)
+                        .background(Color.noticeBackground, in: RoundedRectangle(cornerRadius: 8))
+                    }
+
                     if let message = viewModel.refreshMessage {
                         Text(message)
                             .font(.detail)

@@ -1,7 +1,5 @@
-import Foundation
-
 protocol FetchListingsUseCaseProtocol: Sendable {
-    func execute() async throws -> [Listing]
+    func execute() async throws -> ListingsFeed
 }
 
 struct FetchListingsUseCase {
@@ -13,7 +11,7 @@ struct FetchListingsUseCase {
 }
 
 extension FetchListingsUseCase: FetchListingsUseCaseProtocol {
-    func execute() async throws -> [Listing] {
+    func execute() async throws -> ListingsFeed {
         try await repository.fetchListings()
     }
 }

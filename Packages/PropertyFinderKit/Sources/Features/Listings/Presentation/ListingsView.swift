@@ -27,6 +27,7 @@ public struct ListingsView: View {
             }
             .task(id: retryTrigger) {
                 await viewModel.load()
+                await viewModel.observeUpdates()
             }
     }
 
@@ -42,23 +43,7 @@ public struct ListingsView: View {
 }
 
 #if DEBUG
-    #Preview("Results") {
+    #Preview {
         ListingsView(viewModel: ListingsViewModelMock())
-    }
-
-    #Preview("Loading") {
-        ListingsView(viewModel: ListingsViewModelMock(state: .loading))
-    }
-
-    #Preview("Load failure") {
-        ListingsView(viewModel: ListingsViewModelMock(state: .failed(.connection)))
-    }
-
-    #Preview("No matches") {
-        ListingsView(viewModel: ListingsViewModelMock(
-            state: .noMatches,
-            criteria: ListingSearchCriteria(text: "Palm Jumeirah"),
-            resultsSummary: "0 of 2 properties"
-        ))
     }
 #endif

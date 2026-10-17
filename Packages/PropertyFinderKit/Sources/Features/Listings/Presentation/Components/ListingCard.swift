@@ -158,19 +158,6 @@ struct ListingCard: View {
     }
 }
 
-#if DEBUG
-    #Preview {
-        ScrollView {
-            VStack(spacing: Spacing.pt16) {
-                ForEach(ListingCardViewData.mocks) { card in
-                    ListingCard(card: card, onToggleFavourite: {}, onContact: { _ in })
-                }
-            }
-            .padding(Spacing.pt16)
-        }
-    }
-#endif
-
 private extension ListingTag {
     var title: String {
         switch self {

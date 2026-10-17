@@ -91,15 +91,3 @@ struct FiltersSheet: View {
         .tint(Color.accent)
     }
 }
-
-#if DEBUG
-    #Preview {
-        FiltersSheet(
-            propertyTypes: ["Apartment", "Townhouse", "Villa"],
-            bedroomCounts: [1, 2, 3, 4],
-            selection: ListingFilters(propertyTypes: ["Villa"]),
-            matchingCount: { _ in 2 },
-            onApply: { _ in }
-        )
-    }
-#endif

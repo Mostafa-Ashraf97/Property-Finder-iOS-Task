@@ -1,3 +1,3 @@
 protocol ListingsRepositoryProtocol: Sendable {
-    func fetchListings() async throws -> [Listing]
+    func fetchListings() async throws -> ListingsFeed
 }

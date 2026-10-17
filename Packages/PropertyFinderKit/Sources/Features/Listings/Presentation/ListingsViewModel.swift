@@ -1,5 +1,7 @@
 import Extensions
+import Foundation
 import Logger
+import Networking
 import Observation
 
 @MainActor
@@ -10,9 +12,11 @@ protocol ListingsViewModelProtocol: AnyObject, Observable {
     var availablePropertyTypes: [String] { get }
     var availableBedroomCounts: [Int] { get }
     var refreshMessage: String? { get }
+    var isShowingSavedListings: Bool { get }
 
     func load() async
     func refresh() async
+    func observeUpdates() async
     func matchingCount(for filters: ListingFilters) -> Int
     func clearSearchAndFilters()
     func toggleFavourite(id: String)
@@ -24,6 +28,7 @@ protocol ListingsViewModelProtocol: AnyObject, Observable {
 final class ListingsViewModel {
     private(set) var state: ListingsViewState = .loading
     private(set) var refreshMessage: String?
+    private(set) var isShowingSavedListings = false
     var criteria = ListingSearchCriteria() {
         didSet {
             if criteria != oldValue, hasLoaded {
@@ -39,6 +44,7 @@ final class ListingsViewModel {
     private let loadFavouritesUseCase: any LoadFavouritesUseCaseProtocol
     private let toggleFavouriteUseCase: any ToggleFavouriteUseCaseProtocol
     private let queryListingsUseCase: any QueryListingsUseCaseProtocol
+    private let networkMonitor: any NetworkMonitorProtocol
     private let logger: any LoggerProtocol
 
     init(
@@ -46,12 +52,14 @@ final class ListingsViewModel {
         loadFavouritesUseCase: any LoadFavouritesUseCaseProtocol,
         toggleFavouriteUseCase: any ToggleFavouriteUseCaseProtocol,
         queryListingsUseCase: any QueryListingsUseCaseProtocol,
+        networkMonitor: any NetworkMonitorProtocol,
         logger: any LoggerProtocol
     ) {
         self.fetchListingsUseCase = fetchListingsUseCase
         self.loadFavouritesUseCase = loadFavouritesUseCase
         self.toggleFavouriteUseCase = toggleFavouriteUseCase
         self.queryListingsUseCase = queryListingsUseCase
+        self.networkMonitor = networkMonitor
         self.logger = logger
     }
 
@@ -81,6 +89,13 @@ final class ListingsViewModel {
         }
     }
 
+    private func apply(_ feed: ListingsFeed) {
+        listings = feed.listings
+        isShowingSavedListings = feed.isStale
+        refreshMessage = nil
+        updateState()
+    }
+
     private func fetchListings() async {
         let isRefresh = hasLoaded
         refreshMessage = nil
@@ -90,10 +105,9 @@ final class ListingsViewModel {
         }
 
         do {
-            let listings = try await fetchListingsUseCase.execute()
+            let feed = try await fetchListingsUseCase.execute()
             try Task.checkCancellation()
-            self.listings = listings
-            updateState()
+            apply(feed)
         } catch {
             guard !Task.isCancelled, !error.isCancellation else { return }
             if isRefresh {
@@ -139,6 +153,21 @@ extension ListingsViewModel: ListingsViewModelProtocol {
         await fetchListings()
     }
 
+    /// Fetches again when the connection comes back, if the screen shows saved listings or a failed load.
+    func observeUpdates() async {
+        var wasOffline = false
+        for await isOnline in networkMonitor.updates() {
+            if isOnline, wasOffline {
+                if isShowingSavedListings {
+                    await refresh()
+                } else if case .failed = state {
+                    await load()
+                }
+            }
+            wasOffline = !isOnline
+        }
+    }
+
     func matchingCount(for filters: ListingFilters) -> Int {
         var previewCriteria = criteria
         previewCriteria.filters = filters
@@ -160,6 +189,6 @@ extension ListingsViewModel: ListingsViewModelProtocol {
     }
 
     func contact(_ type: ContactType, listingID: String) {
-        logger.info("Contact \(type.rawValue) for \(listingID)")
+        logger.info("Contact \(type.rawValue)", private: listingID)
     }
 }

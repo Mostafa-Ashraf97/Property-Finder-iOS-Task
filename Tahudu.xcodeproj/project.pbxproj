@@ -13,7 +13,6 @@
 		1FC471A7D479572D541CED11 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 2090B6EDBA747D42C5546247 /* PrivacyInfo.xcprivacy */; };
 		41939DE40ED11E2BC2D7008B /* Listings in Frameworks */ = {isa = PBXBuildFile; productRef = B8F3BB5F5443F6D1CC12736D /* Listings */; };
 		6FA7008A8D2EA88F380E322E /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B915267F8158F97BEC140A4 /* AppCoordinator.swift */; };
-		71D9CB7513E903413EDE5684 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A95EB4859327EA2591925FE8 /* LaunchScreen.storyboard */; };
 		87EFE4C41CFD781F48A03786 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = 34138225F7053175636E69FE /* Networking */; };
 		A640F40B1835F39247ABBCC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63355346939A275DC3F9B76D /* Assets.xcassets */; };
 		AD9AA27CE212F1994022AE00 /* Logger in Frameworks */ = {isa = PBXBuildFile; productRef = 3A064F421480A89D792FC490 /* Logger */; };
@@ -42,7 +41,6 @@
 		7E82ED1345EB17D68D42562E /* Tahudu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tahudu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87DAA7F81EA83AA2B041C162 /* PropertyFinderKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = PropertyFinderKit; path = Packages/PropertyFinderKit; sourceTree = "<group>"; };
 		8B915267F8158F97BEC140A4 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
-		A95EB4859327EA2591925FE8 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BA519B0618698B29F136D5E8 /* AppFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFactory.swift; sourceTree = "<group>"; };
 		EA2859265B8CBAB5E59B7C51 /* TahuduTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TahuduTabView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,7 +100,6 @@
 				E1E56BB71D0B3EFE5DDE12FD /* App */,
 				FDD3DCFC3550A85E62921954 /* Assets */,
 				5B33FFF909EF83E019F072E8 /* Info.plist */,
-				A95EB4859327EA2591925FE8 /* LaunchScreen.storyboard */,
 				2090B6EDBA747D42C5546247 /* PrivacyInfo.xcprivacy */,
 				71BCEABFE67F0643136A3A10 /* TahuduApp.swift */,
 			);
@@ -192,7 +189,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A640F40B1835F39247ABBCC2 /* Assets.xcassets in Resources */,
-				71D9CB7513E903413EDE5684 /* LaunchScreen.storyboard in Resources */,
 				1FC471A7D479572D541CED11 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

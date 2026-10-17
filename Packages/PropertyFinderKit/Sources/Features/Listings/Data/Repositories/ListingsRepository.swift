@@ -5,11 +5,24 @@ import Networking
 
 struct ListingsRepository {
     private let remoteDataSource: any ListingsRemoteDataSourceProtocol
+    private let localDataSource: any ListingsLocalDataSourceProtocol
     private let logger: any LoggerProtocol
 
-    init(remoteDataSource: any ListingsRemoteDataSourceProtocol, logger: any LoggerProtocol) {
+    init(
+        remoteDataSource: any ListingsRemoteDataSourceProtocol,
+        localDataSource: any ListingsLocalDataSourceProtocol,
+        logger: any LoggerProtocol
+    ) {
         self.remoteDataSource = remoteDataSource
+        self.localDataSource = localDataSource
         self.logger = logger
+    }
+
+    private func listings(from body: Data) throws -> [Listing] {
+        try JSONResponse.decode(ListingsResponseDTO.self, from: body).listings
+            .filter { !$0.id.isBlank }
+            .uniqued(by: \.id)
+            .map { $0.toDomainModel() }
     }
 
     private func mapError(_ error: any Error) -> ListingsError {
@@ -29,21 +42,26 @@ struct ListingsRepository {
 }
 
 extension ListingsRepository: ListingsRepositoryProtocol {
-    func fetchListings() async throws -> [Listing] {
-        let response: ListingsResponseDTO
+    func fetchListings() async throws -> ListingsFeed {
+        let cached = localDataSource.load()
         do {
-            response = try await remoteDataSource.fetchListings()
+            let response = try await remoteDataSource.fetchListings(ifNoneMatch: cached?.etag)
+            let body = response.isNotModified ? cached?.body ?? response.data : response.data
+            let listings = try listings(from: body)
+            try Task.checkCancellation()
+            let etag = response.isNotModified ? response.etag ?? cached?.etag : response.etag
+            localDataSource.save(CachedListingsResponse(body: body, etag: etag))
+            return ListingsFeed(listings: listings, isStale: false)
         } catch {
             if Task.isCancelled || error.isCancellation {
                 throw CancellationError()
             }
-            logger.error("Fetching listings failed: \(error)")
-            throw mapError(error)
+            logger.error("Fetching listings failed", private: String(describing: error))
+            let failure = mapError(error)
+            if failure == .connection || failure == .timedOut, let cached, let listings = try? listings(from: cached.body) {
+                return ListingsFeed(listings: listings, isStale: true)
+            }
+            throw failure
         }
-
-        return response.listings
-            .filter { !$0.id.isBlank }
-            .uniqued(by: \.id)
-            .map { $0.toDomainModel() }
     }
 }

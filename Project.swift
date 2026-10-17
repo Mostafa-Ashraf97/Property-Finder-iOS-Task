@@ -26,7 +26,7 @@ let project = Project(
             deploymentTargets: .iOS("26.0"),
             infoPlist: .file(path: "Tahudu/Info.plist"),
             sources: ["Tahudu/**/*.swift"],
-            resources: ["Tahudu/Assets/**", "Tahudu/LaunchScreen.storyboard", "Tahudu/PrivacyInfo.xcprivacy"],
+            resources: ["Tahudu/Assets/**", "Tahudu/PrivacyInfo.xcprivacy"],
             dependencies: [
                 .package(product: "Listings"),
                 .package(product: "Settings"),

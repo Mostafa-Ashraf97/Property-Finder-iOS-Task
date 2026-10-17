@@ -1,7 +1,7 @@
 import Networking
 
 protocol ListingsRemoteDataSourceProtocol: Sendable {
-    func fetchListings() async throws -> ListingsResponseDTO
+    func fetchListings(ifNoneMatch etag: String?) async throws -> HTTPResponse
 }
 
 struct ListingsRemoteDataSource {
@@ -13,7 +13,7 @@ struct ListingsRemoteDataSource {
 }
 
 extension ListingsRemoteDataSource: ListingsRemoteDataSourceProtocol {
-    func fetchListings() async throws -> ListingsResponseDTO {
-        try await client.request(ListingsEndpoint.listings)
+    func fetchListings(ifNoneMatch etag: String?) async throws -> HTTPResponse {
+        try await client.response(for: ListingsEndpoint.listings, ifNoneMatch: etag)
     }
 }
