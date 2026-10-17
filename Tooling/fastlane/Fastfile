@@ -31,9 +31,26 @@ platform :ios do
     )
   end
 
-  desc "Build unsigned Debug and Release simulator apps"
+  desc "Run the unit tests on an iPhone simulator"
+  lane :test do |options|
+    run_tests(
+      project: project,
+      scheme: "Tahudu",
+      testplan: "Tahudu",
+      device: options[:device] || "iPhone 17 (26.2)",
+      ensure_devices_found: true,
+      derived_data_path: File.join(output, "DerivedData"),
+      result_bundle: true,
+      output_directory: File.join(output, "tests"),
+      buildlog_path: File.join(output, "logs", "Tests"),
+      xcodebuild_formatter: "",
+      suppress_xcode_output: true
+    )
+  end
+
+  desc "Run the unit tests, then build an unsigned Release simulator app"
   lane :ci do
-    build(configuration: "Debug")
+    test
     build
   end
 end

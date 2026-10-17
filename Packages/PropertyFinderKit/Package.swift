@@ -33,6 +33,10 @@ let package = Package(
             path: "Sources/Features/Settings"
         ),
 
+        .testTarget(name: "NetworkingTests", dependencies: ["Networking"]),
+        .testTarget(name: "ListingsTests", dependencies: ["Listings", "Networking", "Logger", "Services"]),
+        .testTarget(name: "SettingsTests", dependencies: ["Settings"]),
+        .testTarget(name: "SnapshotTests", dependencies: ["Listings", "Settings"], exclude: ["__Snapshots__"]),
     ],
     swiftLanguageModes: [.v6]
 )

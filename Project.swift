@@ -52,6 +52,7 @@ let project = Project(
         .scheme(
             name: "Tahudu",
             buildAction: .buildAction(targets: ["Tahudu"]),
+            testAction: .testPlans(["TestPlans/Tahudu.xctestplan"]),
             runAction: .runAction(configuration: .debug),
             archiveAction: .archiveAction(configuration: .release),
             profileAction: .profileAction(configuration: .release),
