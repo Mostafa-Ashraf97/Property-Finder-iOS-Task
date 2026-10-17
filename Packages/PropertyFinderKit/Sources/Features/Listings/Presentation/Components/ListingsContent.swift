@@ -81,6 +81,13 @@ struct ListingsContent: View {
                 systemImage: "heart",
                 action: ("Show all properties", { viewModel.criteria.favouritesOnly = false })
             )
+        case .noMatches:
+            message(
+                title: viewModel.criteria.favouritesOnly ? "No matching favourites" : "No matching properties",
+                text: "Try another location or clear your search and filters.",
+                systemImage: "magnifyingglass",
+                action: ("Clear search and filters", viewModel.clearSearchAndFilters)
+            )
         case let .results(cards):
             cardList(cards)
         }

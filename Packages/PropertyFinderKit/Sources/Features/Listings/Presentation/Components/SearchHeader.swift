@@ -5,7 +5,7 @@ import SwiftUI
 struct SearchHeader: View {
     let viewModel: any ListingsViewModelProtocol
     @FocusState.Binding var isSearchFocused: Bool
-    @State private var text = ""
+    let onShowFilters: () -> Void
 
     var body: some View {
         VStack(spacing: Spacing.pt16) {
@@ -21,12 +21,56 @@ struct SearchHeader: View {
 
     private var controls: some View {
         HStack(spacing: Spacing.pt24) {
-            action("slider.horizontal.3", label: "Filters")
-            action("arrow.up.arrow.down", label: "Sort properties")
+            filtersButton
+            sortMenu
             Spacer(minLength: 0)
             favouritesButton
         }
         .buttonStyle(.borderless)
+    }
+
+    private var filtersButton: some View {
+        let activeCount = viewModel.criteria.filters.activeCount
+        return Button {
+            isSearchFocused = false
+            onShowFilters()
+        } label: {
+            icon("slider.horizontal.3", isActive: activeCount > 0)
+                .overlay(alignment: .topTrailing) {
+                    if activeCount > 0 {
+                        Text(String(activeCount))
+                            .font(.badge)
+                            .foregroundStyle(.white)
+                            .frame(minWidth: 16, minHeight: 16)
+                            .background(Color.badgeBackground, in: Circle())
+                            .offset(x: Spacing.pt8, y: -Spacing.pt8)
+                    }
+                }
+        }
+        .accessibilityLabel("Filters")
+        .accessibilityValue("\(activeCount) active")
+    }
+
+    private var sortMenu: some View {
+        let sortOrder = Binding(
+            get: { viewModel.criteria.sortOrder },
+            set: { order in
+                isSearchFocused = false
+                viewModel.criteria.sortOrder = order
+            }
+        )
+        return Menu {
+            Picker("Sort properties", selection: sortOrder) {
+                ForEach(ListingSortOrder.allCases) { order in
+                    Text(order.title).tag(order)
+                }
+            }
+        } label: {
+            icon("arrow.up.arrow.down", isActive: viewModel.criteria.sortOrder != .recommended)
+                .scaleEffect(x: -1)
+        }
+        .accessibilityLabel("Sort properties")
+        .accessibilityValue(viewModel.criteria.sortOrder.title)
     }
 
     private var favouritesButton: some View {
@@ -50,7 +94,10 @@ struct SearchHeader: View {
         ClearableTextField(
             label: "City, area or building",
             symbol: "magnifyingglass",
-            text: $text,
+            text: Binding(
+                get: { viewModel.criteria.text },
+                set: { viewModel.criteria.text = $0 }
+            ),
             isFocused: $isSearchFocused
         )
         .textInputAutocapitalization(.words)
@@ -61,17 +108,24 @@ struct SearchHeader: View {
     @ViewBuilder
     private var summaryBar: some View {
         if let summary = viewModel.resultsSummary {
+            let isShowingFavourites = viewModel.criteria.favouritesOnly
             HStack(spacing: Spacing.pt4) {
-                Image(systemName: "star.fill")
-                    .foregroundStyle(Color.brand)
-                    .accessibilityHidden(true)
+                if isShowingFavourites {
+                    Image(systemName: "star.fill")
+                        .foregroundStyle(Color.brand)
+                        .accessibilityHidden(true)
+                }
                 Text(summary)
                     .fontWeight(.semibold)
                     .foregroundStyle(Color.primaryText)
                 Spacer(minLength: Spacing.pt8)
-                Button("Show all") {
+                Button(isShowingFavourites ? "Show all" : "Clear") {
                     isSearchFocused = false
-                    viewModel.criteria.favouritesOnly = false
+                    if isShowingFavourites {
+                        viewModel.criteria.favouritesOnly = false
+                    } else {
+                        viewModel.clearSearchAndFilters()
+                    }
                 }
                 .fontWeight(.semibold)
                 .expandingHitArea(by: Spacing.pt12)
@@ -79,16 +133,6 @@ struct SearchHeader: View {
             .font(.detail)
             .accessibilityIdentifier("search.summary")
         }
-    }
-
-    private func action(_ symbol: String, label: String) -> some View {
-        Button {
-            isSearchFocused = false
-            viewModel.logAction("\(label) tapped")
-        } label: {
-            icon(symbol, isActive: false)
-        }
-        .accessibilityLabel(label)
     }
 
     private func icon(_ systemName: String, isActive: Bool, tint: Color = Color.accent) -> some View {
@@ -105,5 +149,16 @@ struct SearchHeader: View {
                 }
             }
             .expandingHitArea(by: Spacing.pt12)
+    }
+}
+
+private extension ListingSortOrder {
+    var title: String {
+        switch self {
+        case .recommended: "Recommended"
+        case .newest: "Newest first"
+        case .priceLowToHigh: "Price: low to high"
+        case .priceHighToLow: "Price: high to low"
+        }
     }
 }

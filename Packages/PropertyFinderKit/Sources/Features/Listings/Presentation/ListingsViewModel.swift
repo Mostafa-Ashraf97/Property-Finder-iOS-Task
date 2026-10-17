@@ -7,12 +7,15 @@ protocol ListingsViewModelProtocol: AnyObject, Observable {
     var state: ListingsViewState { get }
     var criteria: ListingSearchCriteria { get set }
     var resultsSummary: String? { get }
+    var availablePropertyTypes: [String] { get }
+    var availableBedroomCounts: [Int] { get }
     var refreshMessage: String? { get }
 
     func load() async
     func refresh() async
+    func matchingCount(for filters: ListingFilters) -> Int
+    func clearSearchAndFilters()
     func toggleFavourite(id: String)
-    func logAction(_ action: String)
     func contact(_ type: ContactType, listingID: String)
 }
 
@@ -55,7 +58,7 @@ final class ListingsViewModel {
     private var hasLoaded: Bool {
         switch state {
         case .loading, .failed: false
-        case .noListings, .noFavourites, .results: true
+        case .noListings, .noFavourites, .noMatches, .results: true
         }
     }
 
@@ -71,7 +74,11 @@ final class ListingsViewModel {
 
         let matches = queryListingsUseCase.execute(listings: listings, criteria: criteria, favouriteIDs: favouriteIDs)
         let cards = matches.map { ListingCardViewData(listing: $0, isFavourite: favouriteIDs.contains($0.id)) }
-        state = cards.isEmpty ? .noFavourites : .results(cards)
+        if cards.isEmpty {
+            state = criteria.favouritesOnly && savedCount == 0 ? .noFavourites : .noMatches
+        } else {
+            state = .results(cards)
+        }
     }
 
     private func fetchListings() async {
@@ -100,8 +107,26 @@ final class ListingsViewModel {
 
 extension ListingsViewModel: ListingsViewModelProtocol {
     var resultsSummary: String? {
-        guard criteria.favouritesOnly, hasLoaded else { return nil }
-        return savedCount.counted("saved property", plural: "saved properties")
+        let isNarrowed = criteria.favouritesOnly || !criteria.text.isBlank || criteria.filters.activeCount > 0
+        guard isNarrowed, hasLoaded else { return nil }
+
+        let total = criteria.favouritesOnly ? savedCount : listings.count
+        let collection = criteria.favouritesOnly
+            ? total.counted("saved property", plural: "saved properties")
+            : total.counted("property", plural: "properties")
+        let shown = switch state {
+        case let .results(cards): cards.count
+        default: 0
+        }
+        return shown == total ? collection : "\(shown) of \(collection)"
+    }
+
+    var availablePropertyTypes: [String] {
+        listings.map(\.type).uniqued().sorted()
+    }
+
+    var availableBedroomCounts: [Int] {
+        listings.compactMap(\.bedrooms).uniqued().sorted()
     }
 
     func load() async {
@@ -114,15 +139,24 @@ extension ListingsViewModel: ListingsViewModelProtocol {
         await fetchListings()
     }
 
+    func matchingCount(for filters: ListingFilters) -> Int {
+        var previewCriteria = criteria
+        previewCriteria.filters = filters
+        return queryListingsUseCase.execute(listings: listings, criteria: previewCriteria, favouriteIDs: favouriteIDs).count
+    }
+
+    func clearSearchAndFilters() {
+        var updatedCriteria = criteria
+        updatedCriteria.text = ""
+        updatedCriteria.filters = ListingFilters()
+        criteria = updatedCriteria
+    }
+
     func toggleFavourite(id: String) {
         favouriteIDs = toggleFavouriteUseCase.execute(id: id, currentIDs: favouriteIDs)
         if hasLoaded {
             updateState()
         }
-    }
-
-    func logAction(_ action: String) {
-        logger.info(action, privacy: .public)
     }
 
     func contact(_ type: ContactType, listingID: String) {

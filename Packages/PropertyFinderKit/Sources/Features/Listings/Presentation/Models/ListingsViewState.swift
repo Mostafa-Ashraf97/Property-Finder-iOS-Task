@@ -3,5 +3,6 @@ enum ListingsViewState: Equatable {
     case failed(ListingsError)
     case noListings
     case noFavourites
+    case noMatches
     case results([ListingCardViewData])
 }

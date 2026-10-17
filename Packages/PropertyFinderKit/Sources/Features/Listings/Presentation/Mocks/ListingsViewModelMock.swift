@@ -8,6 +8,8 @@
         var criteria: ListingSearchCriteria
         var resultsSummary: String?
         var refreshMessage: String?
+        let availablePropertyTypes = ["Apartment", "Townhouse", "Villa"]
+        let availableBedroomCounts = [1, 2, 3, 4]
 
         init(
             state: ListingsViewState = .results(ListingCardViewData.mocks),
@@ -25,9 +27,17 @@
 
         func refresh() async {}
 
-        func toggleFavourite(id _: String) {}
+        func matchingCount(for _: ListingFilters) -> Int {
+            guard case let .results(cards) = state else { return 0 }
+            return cards.count
+        }
 
-        func logAction(_: String) {}
+        func clearSearchAndFilters() {
+            criteria.text = ""
+            criteria.filters = ListingFilters()
+        }
+
+        func toggleFavourite(id _: String) {}
 
         func contact(_: ContactType, listingID _: String) {}
     }

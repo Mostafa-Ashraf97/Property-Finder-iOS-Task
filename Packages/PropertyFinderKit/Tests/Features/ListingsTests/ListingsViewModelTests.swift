@@ -21,6 +21,8 @@ struct ListingsViewModelTests {
 
         #expect(model.cards.map(\.id) == ["marina", "studio", "villa"])
         #expect(model.cards.map(\.isFavourite) == [false, true, false])
+        #expect(model.availablePropertyTypes == ["Apartment", "Villa"])
+        #expect(model.availableBedroomCounts == [1, 4])
     }
 
     @Test func loadingAgainAfterAFailureRetries() async {
@@ -48,6 +50,23 @@ struct ListingsViewModelTests {
         fetch.complete(call: 1, with: .success(feed))
         await retry.value
         #expect(model.cards.count == 3)
+    }
+
+    @Test func criteriaEditedWhileLoadingAreAppliedToTheResults() async throws {
+        let fetch = ControlledFetchListings()
+        let model = makeModel(fetch: fetch)
+        let load = Task { await model.load() }
+        try await waitUntil { fetch.callCount == 1 }
+
+        model.criteria.text = "marina"
+        #expect(model.state == .loading)
+        #expect(model.resultsSummary == nil)
+
+        fetch.complete(call: 0, with: .success(feed))
+        await load.value
+
+        #expect(model.cards.map(\.id) == ["marina"])
+        #expect(model.resultsSummary == "1 of 3 properties")
     }
 
     @Test func doesNotReloadOnceLoaded() async throws {
@@ -116,6 +135,29 @@ struct ListingsViewModelTests {
         await model.refresh()
 
         #expect(model.cards.map(\.id) == ["new"])
+    }
+
+    @Test func criteriaEditedDuringRefreshAreAppliedToTheNewListings() async throws {
+        let fetch = ControlledFetchListings()
+        let model = makeModel(fetch: fetch)
+        let load = Task { await model.load() }
+        try await waitUntil { fetch.callCount == 1 }
+        fetch.complete(call: 0, with: .success(feed))
+        await load.value
+
+        let refresh = Task { await model.refresh() }
+        try await waitUntil { fetch.callCount == 2 }
+        model.criteria.text = "marina"
+        #expect(model.cards.map(\.id) == ["marina"])
+
+        fetch.complete(call: 1, with: .success([
+            .mock(id: "new-marina", location: "Dubai Marina"),
+            .mock(id: "new-villa", location: "Arabian Ranches"),
+        ]))
+        await refresh.value
+
+        #expect(model.cards.map(\.id) == ["new-marina"])
+        #expect(model.resultsSummary == "1 of 2 properties")
     }
 
     @Test func anEmptyFeedCanBeRefreshed() async {
@@ -229,7 +271,7 @@ struct ListingsViewModelTests {
         #expect(model.state == .noListings)
     }
 
-    @Test func showsNoFavouritesUntilAPropertyIsSaved() async {
+    @Test func distinguishesNoFavouritesFromNoMatches() async {
         let model = makeModel(fetch: SequencedFetchListings([.success(feed)]))
         await model.load()
 
@@ -237,10 +279,12 @@ struct ListingsViewModelTests {
         #expect(model.state == .noFavourites, "Nothing has been saved yet")
 
         model.toggleFavourite(id: "villa")
-        #expect(model.cards.map(\.id) == ["villa"])
+        model.criteria.text = "marina"
+        #expect(model.state == .noMatches, "A favourite exists, but the search hides it")
 
-        model.toggleFavourite(id: "villa")
-        #expect(model.state == .noFavourites, "Removing the last favourite empties the favourites view")
+        model.criteria.favouritesOnly = false
+        model.criteria.text = "no such place"
+        #expect(model.state == .noMatches)
     }
 
     // MARK: Favourites
@@ -275,6 +319,42 @@ struct ListingsViewModelTests {
         model.criteria.favouritesOnly = false
         #expect(model.cards.count == 3)
         #expect(model.resultsSummary == nil)
+    }
+
+    // MARK: Search criteria
+
+    @Test func searchAndFiltersNarrowAndClearTogether() async {
+        let model = makeModel(fetch: SequencedFetchListings([.success(feed)]))
+        await model.load()
+
+        model.criteria.text = "marina"
+        #expect(model.cards.map(\.id) == ["marina"])
+        #expect(model.resultsSummary == "1 of 3 properties")
+
+        var filters = ListingFilters()
+        filters.bedrooms = .studio
+        #expect(model.matchingCount(for: filters) == 0, "The preview count combines with the current search")
+        #expect(model.cards.map(\.id) == ["marina"], "Previewing filters does not apply them")
+
+        model.criteria.text = ""
+        model.criteria.filters = filters
+        #expect(model.cards.map(\.id) == ["studio"])
+
+        model.clearSearchAndFilters()
+        #expect(model.cards.count == 3)
+        #expect(model.resultsSummary == nil)
+    }
+
+    @Test func sortingReordersCards() async {
+        let model = makeModel(fetch: SequencedFetchListings([.success([
+            .mock(id: "expensive", price: 3_000_000),
+            .mock(id: "cheap", price: 900_000),
+        ])]))
+        await model.load()
+
+        model.criteria.sortOrder = .priceLowToHigh
+
+        #expect(model.cards.map(\.id) == ["cheap", "expensive"])
     }
 
     // MARK: Helpers
