@@ -1,164 +1,180 @@
-# Property Finder - Tech Interview
+# Tahudu — Property Finder iOS Take-Home
 
-> **Solution notes:** how to run it, what was built and why — see [SOLUTION.md](SOLUTION.md).
-> Open `Tahudu.xcodeproj` directly in Xcode 26+. The generated project is included; Tuist and other developer tools are optional for reviewers.
+An iOS property browser for the supplied exercise: browse live listings, search, filter and sort them, save favourites, and keep browsing offline. Search is SwiftUI.
 
-Congratulations! 🥳 
-This is a **take‑home coding exercise** for the Property Finder iOS team. 
-You have **up to 3 days** to work through the tasks below at your own pace.
+**iOS 26+ · Swift 6 · SwiftUI + Observation · UIKit · Local Swift package · No third-party app libraries**
 
----
+<p align="center">
+  <a href="Screenshots/App/demo.mp4"><img src="Screenshots/App/demo.gif" width="280" alt="Demo: browsing listings, saving a favourite, searching, filtering, sorting and opening My Account"></a>
+  <br>
+  <sub>Browsing, favourites, search, filters, sorting and My Account. Select the preview for the full-quality video.</sub>
+</p>
 
-Our idea is to evaluate your working style:
-* **How you structure your code**
-* **How you are tackling specific tasks**
+The original brief, JSON contract and reference design are in [TASK.md](TASK.md).
 
-We put together a very lite version of our beloved Property Finder application, with a simple backend functionality, tracking, logging, and all the other stuff... just basic UI of two out of many screens of the actual application.
+[Run the app](#run-the-app) · [Features](#features) · [Architecture](#architecture) · [Decisions](#decisions) · [Testing](#testing) · [Tooling and CI](#tooling-and-ci) · [Next steps](#next-steps)
 
----
+## Run the app
 
-## Table of Contents
-- [Task 1 - Rebuild the following UI in SwiftUI](#task-1---rebuild-the-following-ui-in-swiftui)
-- [Task 2 - Fetch listings and populate the Search screen](#task-2---fetch-listings-and-populate-the-search-screen)
-- [Task 3 - Favourites and filtering](#task-3---favourites-and-filtering)
-- [Bonus Task - Refactor the Settings screen](#bonus-task---refactor-the-settings-screen)
-- [Sending the project file back in](#sending-the-project-file-back-in)
+1. Open **[Tahudu.xcodeproj](Tahudu.xcodeproj)** in Xcode 26 or newer.
+2. Select the **Tahudu** scheme and an iPhone or iPad simulator running iOS 26 or newer.
+3. Press **⌘R**.
 
----
+The generated project is included, so no tools, setup scripts or API keys are needed. The first load needs internet access; after that, a saved copy covers connection failures.
 
-## Task 1 - Rebuild the following UI in SwiftUI
+## Features
 
-### Notes
+| Exercise | Implementation |
+| --- | --- |
+| **Task 1 — Search UI** | SwiftUI cards with a photo carousel, badges, property details, relative dates, a last-contacted banner and contact buttons, under a pinned search header. Fonts and spacing follow the brief. |
+| **Task 2 — Live listings** | `URLSession` with `async/await`, DTO decoding and mapping to domain models. |
+| **Task 3 — Favourites** | Hearts toggle favourites, saved on the device. The header star shows favourites only, with a filled star, a summary, a “Show all” action and tinted results. |
+| **Bonus — Settings** | A separate UIKit feature with a row-driven table and reusable cells. The supplied placeholder actions are unchanged. |
 
-* The list should scroll beneath the search bar
-* Each button should only print a short statement to the console
-* The carousel images are in Assets.xcassets
+Beyond the brief:
 
-### Design Remarks
-* Corner Radius: `Multiples of 4`
-* Paddings: `Multiples of 4`
-* Spacings: `Multiples of 4`
+- **Search, filters and sorting:** text search over location and type (ignoring case), property type and bedroom filters with a live result count, and sorting by newest or price. They all combine with favourites.
+- **Loading and errors:** skeleton cards while loading, pull to refresh, distinct empty states, and inline messages that keep existing results.
+- **Offline browsing:** the last response and its ETag are saved. Unchanged feeds come back as 304, a saved copy is shown with an offline notice when the connection fails, and the list refreshes when the connection returns.
+- **Analytics and feature flags:** favourite and contact taps are tracked through a decorator, without listing IDs. Filters and sorting sit behind flags from a local placeholder provider.
+- **Accessibility:** icon-only buttons have VoiceOver labels, toggles report their selected state, and key elements have identifiers for UI tests.
+- **Polish:** a native launch screen, private log details, and a privacy manifest for UserDefaults.
 
-### Font Remarks
-* Tags: `.caption2`
-* "2,575,000 AED": `.headline`
-* Everything else: `.caption`
+Contact buttons and Settings rows only log their action, as the brief asks.
 
----
+### Screenshots
 
-## Task 2 - Fetch listings and populate the Search screen
+| Results | Search | Filters | Favourites | My Account |
+| :---: | :---: | :---: | :---: | :---: |
+| <img src="Screenshots/App/results.jpg" width="160" alt="Listing results with photo carousel, badges and contact buttons"> | <img src="Screenshots/App/search.jpg" width="160" alt="Search for Marina with an active filter and result summary"> | <img src="Screenshots/App/filters.jpg" width="160" alt="Filters sheet with Apartment selected and a live result count"> | <img src="Screenshots/App/favourites.jpg" width="160" alt="Favourites-only view with two saved properties"> | <img src="Screenshots/App/settings.jpg" width="160" alt="My Account screen built with UIKit"> |
 
-In Task 1 you rebuilt the UI of the search screen. In this task, you will **back it with real data**.
+## Architecture
 
-We host a JSON payload that represents the list of properties shown in the screenshot at:
+Seven library targets in one local Swift package (`PropertyFinderKit`), arranged in four levels. **Every arrow points down**, and the two features never import each other.
 
-`https://simplejsoncms.com/api/m6nfoc4jlw`
+```mermaid
+%%{init: {'flowchart': {'curve':'step','rankSpacing':40,'wrappingWidth':400}}}%%
+graph TD
+    L3["`**LEVEL 3 · App**
+TahuduApp · AppFactory · AppCoordinator`"]
+    L2["`**LEVEL 2 · Features**
+Listings · Settings`"]
+    L1["`**LEVEL 1 · Core**
+Networking · Services · DesignSystem`"]
+    L0["`**LEVEL 0 · Foundation**
+Logger · Extensions`"]
 
-Your job is to:
+    L3 --> L2
+    L2 --> L1
+    L1 --> L0
 
-- **Fetch the data** from the hosted endpoint using `URLSession`
-- **Populate the Search screen** with the decoded listings, including tags, meta information, and carousel images
-
-### JSON shape
-
-<details>
-<summary>Click to view JSON contract</summary>
-
-```json
-{
-  "listings": [
-    {
-      "id": "prop_001",
-      "type": "Apartment",
-      "deliveryYear": 2022,
-      "price": 2575000,
-      "currency": "AED",
-      "priceInclusive": true,
-      "location": "Laguna Tower, Lake Almas West, Jumeirah Lake Tower",
-      "bedrooms": null,
-      "bathrooms": 1,
-      "areaSqft": 1356,
-      "publishedAt": "2024-11-28T00:00:00Z",
-      "lastContactedAt": "2021-07-28T00:00:00Z",
-      "tags": ["verified", "new_construction", "live_viewing"],
-      "images": ["FirstImage", "SecondImage"],
-      "contactOptions": ["phone", "email", "whatsapp"]
-    },
-    {
-      "id": "prop_002",
-      "type": "Apartment",
-      "deliveryYear": 2023,
-      "price": 1850000,
-      "currency": "AED",
-      "priceInclusive": false,
-      "location": "Marina Heights, Dubai Marina",
-      "bedrooms": 1,
-      "bathrooms": 2,
-      "areaSqft": 980,
-      "publishedAt": "2024-11-30T00:00:00Z",
-      "lastContactedAt": null,
-      "tags": ["verified"],
-      "images": ["SecondImage", "FirstImage"],
-      "contactOptions": ["phone", "whatsapp"]
-    }
-  ]
-}
+    classDef lvl fill:#0d1116,stroke:#6b7280,stroke-width:1.5px,color:#f4f5f2
+    class L3,L2,L1,L0 lvl
+    linkStyle 0,1,2 stroke:#6b7280,stroke-width:2px
 ```
 
-</details>
+- **Only the app knows every module.** `AppFactory` creates the shared services and passes them to each feature's factory through initializers; `AppCoordinator` owns the tabs.
+- **Features are independent.** Listings and Settings can be built and tested alone. Settings, the refactored UIKit screen, needs nothing below it.
+- **Core modules don't know each other.** Networking (HTTP client and connectivity), Services (analytics and feature flags) and DesignSystem (colours, type, spacing and shared components) only reach down to Logger and Extensions.
 
-### Notes
+### Inside a feature
 
-- **Studio vs bedrooms**: `bedrooms: null` represents a Studio. Any integer value should be rendered as `"N Beds"`.
-- **Carousel images**: `images` contains asset names from `Tahudu/Assets/Assets.xcassets/Carousel Images` (`FirstImage`, `SecondImage`). Use these to drive the image carousel.
-- **Tags**: `tags` drives the badges on top of the image (`VERIFIED`, `NEW CONSTRUCTION`, `LIVE VIEWING`). Feel free to introduce an enum to map from the raw values to UI.
-- **Relative dates**: `publishedAt` is an ISO‑8601 timestamp; compute a relative label such as “Published 3 days ago”.
-- **Last contacted**: `lastContactedAt` is nullable. Only show the yellow “Last contacted …” banner when a value is present.
-- **Contact options**: `contactOptions` indicates which contact buttons to show for each listing (phone, email, WhatsApp).
-- **cURL Example**: You may use this `cURL` example to fetch the response to fill-up the data
+Listings uses folders rather than modules for its layers, but the rule is the same: **Presentation and Data both point at Domain, and Domain points at nothing.**
 
-`curl -X GET "https://simplejsoncms.com/api/m6nfoc4jlw"`
+```text
+Packages/PropertyFinderKit/Sources/Features/Listings/
+├── ListingsFactory.swift
+├── Domain/         Models, repository protocols and use cases
+├── Data/           Endpoint, DTOs, data sources and repositories
+└── Presentation/   Views, view model, analytics decorator and display models
+```
 
-> [!IMPORTANT]
-> Please refrain from using 3rd party libraries
+```mermaid
+%%{init: {'flowchart': {'curve':'step','nodeSpacing':120,'rankSpacing':80,'wrappingWidth':420}}}%%
+graph BT
+    DOM["`**DOMAIN**
+FetchListingsUseCase · QueryListingsUseCase
+ListingsRepositoryProtocol · FavouritesRepositoryProtocol
+Listing · ListingsFeed`"]
+    PRES["`**PRESENTATION**
+ListingsView · ListingsViewModel
+ListingsViewModelAnalyticsDecorator`"]
+    DATA["`**DATA**
+ListingsRepository · FavouritesRepository
+Remote and local data sources`"]
 
+    PRES ==>|depends on| DOM
+    DATA -.->|implements| DOM
 
----
+    classDef box fill:#151a22,stroke:#6b7280,stroke-width:1.5px,color:#f4f5f2
+    class DOM,PRES,DATA box
+    linkStyle 0,1 stroke:#6b7280,stroke-width:2.5px
+```
 
-## Task 3 - Favourites and filtering
+A solid arrow is a compile-time dependency: Presentation calls use-case protocols. A dashed arrow is an implementation: Data implements the repository protocols that Domain declares, so Domain never knows Data exists. Every seam is a protocol, from the view's `ListingsViewModelProtocol` down to the data sources, so each layer can take a stub in tests and previews. `ListingsFactory` is the only place that picks the real implementations.
 
-Add **local favouriting** to the Search screen and a way to filter by favourites.
+## Decisions
 
-### Requirements
+### Shaped by the role
 
-1. Tapping the heart icon on a listing card **toggles** it as a favourite.
-2. Favourites are persisted **locally**.
-3. Add a filter control on the first screen (the Search screen) that, when active, shows **only favourited listings**.
-4. The filter state should be clearly visible so the user knows when they are viewing only favourites.
+The job description asks for iOS 26, Observation, a modular app and Swift concurrency, so the exercise uses each of them on purpose rather than taking the simplest path:
 
-### Notes
+- **iOS 26 minimum:** the current SDK and system design, with no availability checks or fallbacks.
+- **Observation:** `@Observable` view models read directly by SwiftUI, with no Combine or `ObservableObject`.
+- **A modular app:** seven Swift package targets in four levels. That's more structure than a two-screen exercise needs, but it shows how features stay apart as an app grows.
+- **Swift 6 concurrency:** Swift 6 language mode with full checking, `async/await` with cancellation, UI state on the main actor, `Sendable` services and an `AsyncStream` for connectivity changes.
 
-- **Architecture**: Decide where the favouriting logic should live (view, view model, data layer, etc.) and structure your code accordingly.
-- **Heart icon state**: The heart should visually reflect the current favourite state (e.g. filled vs outline).
-- **User experience**: Feel free to add small UX touches (animations, empty‑state messaging) as long as the core behaviour is clear.
+### Tradeoffs
 
----
+| Decision | Why, and the tradeoff |
+| --- | --- |
+| **Feature targets, layered inside** | Features stay independent and shared code reusable. The layers inside a feature are folder conventions, not compiler-enforced. |
+| **MVVM with protocols** | Views stay simple, and every layer can be replaced by a stub in tests and previews. |
+| **Manual factories** | Dependencies are visible without a DI library; the wiring grows with them. |
+| **Explicit screen states** | Empty feed, no favourites, no matches and failure each get their own message. Refresh and offline notices never replace results. |
+| **Conditional requests and a saved copy** | 304 reuses the saved body. Only connection failures and timeouts fall back to it; server errors and malformed data stay errors. The OS may clear the cache. |
+| **Local querying** | Search, filters and sorting run on the full feed without extra requests. Price sorting groups currencies rather than converting them. |
+| **Analytics and flags behind protocols** | A decorator keeps tracking out of the view model, and real providers can replace the logging and local ones later. |
 
-## Bonus Task - Refactor the Settings screen
+## Testing
 
-The code within Screens/Settings could be written much nicer. Your task is to clean it up. 🧹
+XCTest targets in the package: `NetworkingTests`, `ListingsTests`, `SettingsTests` and `SnapshotTests`, run from `TestPlans/Tahudu.xctestplan`.
 
-We will evaluate:
+- **Unit tests** cover request building, ETag and 304 handling, the offline fallback, search, filters and sorting, favourites, card formatting, the view model's states and reconnect refresh, analytics, feature flags and the Settings rows.
+- **No real API:** every dependency is a protocol replaced by a small stub, the HTTP client test answers in-process through a `URLProtocol` stub, and the app is never launched.
+- **Snapshots** compare two listing cards, the full Listings screen and the Settings list against PNGs in `Tests/SnapshotTests/__Snapshots__/`, using a small in-house helper. They're recorded on iOS 26.2, the CI simulator, and skipped on other versions. To accept a visual change, delete the PNG and run the test twice.
+- **Conventions:** each test marks `// Given`, `// When` and `// Then`, and is named `test_unit_condition_result`.
 
-* **How you are tackling the refactor**
-* **Outcome of the refactor**
+Run them with ⌘U, or `bundle exec fastlane ios test` from `Tooling/`.
 
+UI tests aren't written yet, but the Listings screen is ready for them: identifiers follow `listings.<element>` (for example `listings.search`) and `listing.<id>.<element>` (for example `listing.<id>.favourite`).
 
-> [!NOTE]
-> Even if you didn't finish it, just writing comments over what you would've intended here and how should be enough
+## Tooling and CI
 
----
+Reviewers need only Xcode. Everything below is for contributors, and every tool is pinned to an exact version, so a run on a laptop and a run in CI behave the same. Setup and commands are in [Tooling/README.md](Tooling/README.md).
 
-## Sending the project file back in
+| Tool | What it does here | Why it's here |
+| --- | --- | --- |
+| **mise** | Pins Ruby, Tuist, SwiftFormat and Gitleaks in `.mise.toml`. | One file and one `mise install` replace separate Homebrew, rbenv and manual installs. CI installs the same versions through the mise action, which ends "works on my machine". |
+| **Bundler** | Locks Fastlane and its Ruby gems in `Tooling/Gemfile.lock`. | Fastlane only changes when the lock file does, and CI rejects an outdated lock. |
+| **Tuist** | Generates `Tahudu.xcodeproj` from `Project.swift`. | The project is reviewed as Swift code instead of `.pbxproj` diffs. The generated project is committed, so reviewers don't need Tuist. |
+| **Fastlane** | `test`, `build` and `ci` (tests, then a Release build). | One command runs the same steps locally and in CI, so the workflow file stays a thin wrapper and CI failures can be reproduced on a laptop. Signing and TestFlight lanes can be added later without touching the workflow. |
+| **SwiftFormat** | Checks formatting against `Tooling/.swiftformat`. | Style is settled by a tool instead of in code review. The hook and CI read the same config, so they never disagree. |
+| **Gitleaks** | Scans for API keys, tokens and other secrets. | A secret that reaches Git history is hard to remove, so it's caught before the commit and again across the whole history in CI. |
+| **Pre-commit hook** | Runs SwiftFormat and Gitleaks on the staged changes. | Mistakes show up in seconds instead of after a push. It checks exactly what will be committed and never edits files. It's opt-in, and lets a commit through with a notice if a tool is missing, because CI enforces the same checks. (Shift Left) |
+| **GitHub Actions** | Runs the pipeline on pull requests and pushes to `main`. | The project is shared on GitHub, as the brief asks, and hosted macOS 26 runners provide Xcode 26.3. Actions are pinned to commits, permissions are read-only and no secrets are needed. |
 
-Once you are done with the exercises (within the **3-days** window), please share with us back the GitHub Repo you implemented the task on
+The CI pipeline, in order:
+
+1. Install the pinned tools.
+2. Check formatting and scan the full Git history for secrets.
+3. Regenerate the project and fail if anything changed.
+4. Run `fastlane ios ci`: the unit and snapshot tests, then a Release build.
+
+There's no signing or deployment yet.
+
+Later, as the app grows:
+
+- **Tuist cache:** reuse built modules so local and CI builds skip unchanged targets. It needs the modules defined as Tuist targets, or a Tuist account for its Xcode compilation cache.
+- **CI caching:** keep DerivedData and installed tools between runs.
+- **Delivery:** Fastlane lanes for signing with `match` and TestFlight uploads.

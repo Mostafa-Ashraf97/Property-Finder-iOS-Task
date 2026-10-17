@@ -42,9 +42,12 @@ struct FiltersSheet: View {
                                 Spacer()
                                 Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
                                     .foregroundStyle(isSelected ? Color.accent : .secondary)
+                                    .accessibilityHidden(true)
                             }
                             .contentShape(Rectangle())
                         }
+                        .accessibilityAddTraits(isSelected ? .isSelected : [])
+                        .accessibilityIdentifier("listings.filters.type.\(type)")
                     }
                 } header: {
                     Text("Property type")
@@ -60,6 +63,7 @@ struct FiltersSheet: View {
                             Text(count.counted("bedroom", plural: "bedrooms")).tag(ListingBedroomFilter.count(count))
                         }
                     }
+                    .accessibilityIdentifier("listings.filters.bedrooms")
                 }
             }
             .navigationTitle("Filters")
@@ -67,10 +71,12 @@ struct FiltersSheet: View {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { dismiss() }
+                        .accessibilityIdentifier("listings.filters.cancel")
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Reset") { draft = ListingFilters() }
                         .disabled(draft.activeCount == 0)
+                        .accessibilityIdentifier("listings.filters.reset")
                 }
             }
             .safeAreaInset(edge: .bottom) {
@@ -84,6 +90,7 @@ struct FiltersSheet: View {
                         .frame(maxWidth: .infinity, minHeight: 44)
                 }
                 .buttonStyle(.borderedProminent)
+                .accessibilityIdentifier("listings.filters.apply")
                 .padding(Spacing.pt16)
                 .background(.regularMaterial)
             }

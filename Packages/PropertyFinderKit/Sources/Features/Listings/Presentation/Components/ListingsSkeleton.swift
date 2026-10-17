@@ -9,6 +9,10 @@ struct ListingsSkeleton: View {
                 .redacted(reason: .placeholder)
                 .saturation(0)
                 .allowsHitTesting(false)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("Loading properties")
+                .accessibilityIdentifier("listings.loading")
+                .accessibilityHidden(index != 0)
         }
     }
 }

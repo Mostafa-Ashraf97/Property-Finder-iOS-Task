@@ -4,12 +4,20 @@ import SwiftUI
 package struct ClearableTextField: View {
     let label: String
     let symbol: String?
+    let accessibilityID: String
     @Binding var text: String
     @FocusState.Binding var isFocused: Bool
 
-    package init(label: String, symbol: String?, text: Binding<String>, isFocused: FocusState<Bool>.Binding) {
+    package init(
+        label: String,
+        symbol: String?,
+        accessibilityID: String,
+        text: Binding<String>,
+        isFocused: FocusState<Bool>.Binding
+    ) {
         self.label = label
         self.symbol = symbol
+        self.accessibilityID = accessibilityID
         _text = text
         _isFocused = isFocused
     }
@@ -20,10 +28,12 @@ package struct ClearableTextField: View {
                 Image(systemName: symbol)
                     .font(.body)
                     .foregroundStyle(Color.inputPlaceholder)
+                    .accessibilityHidden(true)
             }
-            TextField("", text: $text, prompt: Text(label).foregroundStyle(Color.inputPlaceholder))
+            TextField(label, text: $text, prompt: Text(label).foregroundStyle(Color.inputPlaceholder))
                 .focused($isFocused)
                 .onSubmit { isFocused = false }
+                .accessibilityIdentifier(accessibilityID)
             if !text.isEmpty {
                 Button {
                     text = ""
@@ -34,6 +44,8 @@ package struct ClearableTextField: View {
                         .expandingHitArea(by: Spacing.pt12)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Clear text")
+                .accessibilityIdentifier("\(accessibilityID).clear")
             }
         }
         .padding(.horizontal, Spacing.pt16)

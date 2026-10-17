@@ -51,6 +51,9 @@ struct SearchHeader: View {
                     }
                 }
         }
+        .accessibilityLabel("Filters")
+        .accessibilityValue(activeCount == 0 ? "None applied" : "\(activeCount) active")
+        .accessibilityIdentifier("listings.filters")
     }
 
     private var sortMenu: some View {
@@ -71,6 +74,9 @@ struct SearchHeader: View {
             icon("arrow.up.arrow.down", isActive: viewModel.criteria.sortOrder != .recommended)
                 .scaleEffect(x: -1)
         }
+        .accessibilityLabel("Sort properties")
+        .accessibilityValue(viewModel.criteria.sortOrder.title)
+        .accessibilityIdentifier("listings.sort")
     }
 
     private var favouritesButton: some View {
@@ -85,12 +91,16 @@ struct SearchHeader: View {
                 tint: isShowingFavourites ? .brand : Color.accent
             )
         }
+        .accessibilityLabel("Favourites only")
+        .accessibilityAddTraits(isShowingFavourites ? .isSelected : [])
+        .accessibilityIdentifier("listings.favourites")
     }
 
     private var searchField: some View {
         ClearableTextField(
             label: "City, area or building",
             symbol: "magnifyingglass",
+            accessibilityID: "listings.search",
             text: Binding(
                 get: { viewModel.criteria.text },
                 set: { viewModel.criteria.text = $0 }
@@ -109,10 +119,12 @@ struct SearchHeader: View {
                 if isShowingFavourites {
                     Image(systemName: "star.fill")
                         .foregroundStyle(Color.brand)
+                        .accessibilityHidden(true)
                 }
                 Text(summary)
                     .fontWeight(.semibold)
                     .foregroundStyle(Color.primaryText)
+                    .accessibilityIdentifier("listings.summary")
                 Spacer(minLength: Spacing.pt8)
                 Button(isShowingFavourites ? "Show all" : "Clear") {
                     isSearchFocused = false
@@ -124,6 +136,8 @@ struct SearchHeader: View {
                 }
                 .fontWeight(.semibold)
                 .expandingHitArea(by: Spacing.pt12)
+                .accessibilityLabel(isShowingFavourites ? "Show all properties" : "Clear search and filters")
+                .accessibilityIdentifier("listings.clearCriteria")
             }
             .font(.detail)
         }

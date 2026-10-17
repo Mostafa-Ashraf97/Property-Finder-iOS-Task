@@ -42,6 +42,7 @@ final class ListingsViewModel {
 
     private var listings: [Listing] = []
     private var favouriteIDs: Set<String> = []
+    @ObservationIgnored private var fetchTask: Task<Void, Never>?
 
     private let fetchListingsUseCase: any FetchListingsUseCaseProtocol
     private let loadFavouritesUseCase: any LoadFavouritesUseCaseProtocol
@@ -103,6 +104,22 @@ final class ListingsViewModel {
     }
 
     private func fetchListings() async {
+        if let fetchTask {
+            await fetchTask.value
+            return
+        }
+
+        let task = Task {
+            await performFetch()
+        }
+
+        fetchTask = task
+        defer { fetchTask = nil }
+
+        await task.value
+    }
+
+    private func performFetch() async {
         let isRefresh = hasLoaded
         refreshMessage = nil
         if !isRefresh {

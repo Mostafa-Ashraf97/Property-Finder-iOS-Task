@@ -73,6 +73,9 @@ struct ListingCard: View {
                 .expandingHitArea(by: Spacing.pt8)
         }
         .buttonStyle(.plain)
+        .accessibilityLabel("Favourite")
+        .accessibilityAddTraits(card.isFavourite ? .isSelected : [])
+        .accessibilityIdentifier("listing.\(card.id).favourite")
     }
 
     private var details: some View {
@@ -84,10 +87,12 @@ struct ListingCard: View {
                 }
                 Text(card.price)
                     .font(.prominentValue)
+                    .accessibilityIdentifier("listing.\(card.id).price")
             }
             VStack(alignment: .leading, spacing: Spacing.pt8) {
                 Text(card.location)
                     .foregroundStyle(Color.secondaryText)
+                    .accessibilityIdentifier("listing.\(card.id).location")
                 ViewThatFits(in: .horizontal) {
                     HStack(spacing: Spacing.pt12) { facts }
                     VStack(alignment: .leading, spacing: Spacing.pt8) { facts }
@@ -153,6 +158,8 @@ struct ListingCard: View {
                         .expandingHitArea(by: Spacing.pt4)
                 }
                 .buttonStyle(.borderless)
+                .accessibilityLabel(type.actionLabel)
+                .accessibilityIdentifier("listing.\(card.id).contact.\(type.rawValue)")
             }
         }
     }
@@ -194,6 +201,15 @@ private extension ListingTag {
 }
 
 private extension ContactType {
+    var actionLabel: String {
+        switch self {
+        case .phone: "Call agent"
+        case .email: "Email agent"
+        case .sms: "Send text message"
+        case .whatsApp: "Contact agent on WhatsApp"
+        }
+    }
+
     var icon: Image {
         switch self {
         case .phone: Image(systemName: "phone.fill")
