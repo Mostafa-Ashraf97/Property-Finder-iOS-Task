@@ -6,18 +6,18 @@ struct ListingCard: View {
     let card: ListingCardViewData
     let onToggleFavourite: () -> Void
     let onContact: (ContactType) -> Void
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.redactionReasons) private var redactionReasons
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             ListingPhotos(images: card.images)
                 .overlay(alignment: .top) {
                     HStack(alignment: .top, spacing: Spacing.pt8) {
-                        if !dynamicTypeSize.isAccessibilitySize {
-                            tags
-                        }
+                        tags
                         Spacer(minLength: 0)
-                        favouriteButton
+                        if !redactionReasons.contains(.placeholder) {
+                            favouriteButton
+                        }
                     }
                     .padding(Spacing.pt12)
                 }
@@ -46,8 +46,6 @@ struct ListingCard: View {
                 .strokeBorder(Color.cardBorder, lineWidth: 1)
                 .allowsHitTesting(false)
         }
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("listing.card.\(card.id)")
     }
 
     private var tags: some View {
@@ -69,22 +67,16 @@ struct ListingCard: View {
         Button(action: onToggleFavourite) {
             Image(systemName: card.isFavourite ? "heart.fill" : "heart")
                 .font(.body)
-                .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
                 .foregroundStyle(card.isFavourite ? Color.brand : .white)
                 .frame(width: 32, height: 32)
                 .background(.black.opacity(0.5), in: Circle())
                 .expandingHitArea(by: Spacing.pt8)
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(card.isFavourite ? "Remove from favourites" : "Add to favourites")
-        .accessibilityIdentifier("listing.favourite.\(card.id)")
     }
 
     private var details: some View {
         VStack(alignment: .leading, spacing: Spacing.pt12) {
-            if dynamicTypeSize.isAccessibilitySize {
-                tags
-            }
             VStack(alignment: .leading, spacing: Spacing.pt4) {
                 ViewThatFits(in: .horizontal) {
                     HStack(spacing: Spacing.pt8) { propertyType; delivery }
@@ -106,7 +98,6 @@ struct ListingCard: View {
         .padding(.horizontal, Spacing.pt12)
         .padding(.top, Spacing.pt12)
         .padding(.bottom, Spacing.pt16)
-        .accessibilityElement(children: .combine)
     }
 
     private var propertyType: some View {
@@ -156,15 +147,12 @@ struct ListingCard: View {
                 Button { onContact(type) } label: {
                     type.icon
                         .font(.body)
-                        .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
                         .foregroundStyle(.white)
                         .frame(width: 36, height: 36)
                         .background(type.backgroundColor, in: RoundedRectangle(cornerRadius: 8))
                         .expandingHitArea(by: Spacing.pt4)
                 }
                 .buttonStyle(.borderless)
-                .accessibilityLabel(type.accessibilityLabel)
-                .accessibilityIdentifier("listing.contact.\(card.id).\(type.rawValue)")
             }
         }
     }
@@ -230,14 +218,5 @@ private extension ContactType {
 
     var backgroundColor: Color {
         self == .whatsApp ? .whatsApp : .brand
-    }
-
-    var accessibilityLabel: String {
-        switch self {
-        case .phone: "Call agent"
-        case .email: "Email agent"
-        case .whatsApp: "Contact agent on WhatsApp"
-        case .sms: "Message agent"
-        }
     }
 }

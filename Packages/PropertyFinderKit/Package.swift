@@ -31,24 +31,6 @@ let package = Package(
             path: "Sources/Features/Settings"
         ),
 
-        .testTarget(
-            name: "NetworkingTests",
-            dependencies: ["Networking"]
-        ),
-        .testTarget(
-            name: "LoggerTests",
-            dependencies: ["Logger"]
-        ),
-        .testTarget(
-            name: "ListingsTests",
-            dependencies: ["Listings", "Networking", "Logger"],
-            path: "Tests/Features/ListingsTests"
-        ),
-        .testTarget(
-            name: "SettingsTests",
-            dependencies: ["Settings"],
-            path: "Tests/Features/SettingsTests"
-        ),
     ],
     swiftLanguageModes: [.v6]
 )

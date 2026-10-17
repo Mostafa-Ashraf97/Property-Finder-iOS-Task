@@ -1,6 +1,6 @@
 # Development tooling
 
-Reviewers need only Xcode 26 or newer with an iOS 26 simulator: open `Tahudu.xcodeproj` and press ⌘R. The generated project, shared scheme and test plan are included. The build runs no scripts and downloads no packages. Nothing in this folder runs in a fresh clone. Mise, Ruby, Fastlane, Tuist, the Git hook and an Apple account are only for contributors.
+Reviewers need only Xcode 26 or newer with an iOS 26 simulator: open `Tahudu.xcodeproj` and press ⌘R. The generated project and shared scheme are included. The build runs no scripts and downloads no packages. Nothing in this folder runs in a fresh clone. Mise, Ruby, Fastlane, Tuist and the Git hook are only for contributors. Simulator builds do not need an Apple account.
 
 ## Layout
 
@@ -15,7 +15,7 @@ Tooling/
 └── fastlane/Fastfile
 ```
 
-`.mise.toml`, `Project.swift` and `.gitignore` stay at the repository root for normal tool discovery. Mise searches the current directory and its parents, so root-level version pins apply to app, package and tooling commands. A config stored only in `Tooling/` would not apply to sibling app/package directories. GitHub requires workflows under `.github/workflows/`. The test plan belongs under root-level `TestPlans/`. App and package sources remain in their existing folders.
+`.mise.toml`, `Project.swift` and `.gitignore` stay at the repository root for normal tool discovery. Mise searches the current directory and its parents, so root-level version pins apply to app, package and tooling commands. A config stored only in `Tooling/` would not apply to sibling app/package directories. GitHub requires workflows under `.github/workflows/`. App and package sources remain in their existing folders.
 
 ## Contributor setup
 
@@ -63,25 +63,22 @@ For Fastlane, enter `Tooling/`:
 
 ```sh
 cd Tooling
-mise exec -- bundle exec fastlane ios test
 mise exec -- bundle exec fastlane ios build
 mise exec -- bundle exec fastlane ios ci
 ```
 
-The three lanes are:
+The two lanes are:
 
-- `test`: build Debug and run the app and package tests using the shared `Tahudu` test plan.
 - `build`: build an unsigned Release simulator app.
-- `ci`: run tests, then build Release.
+- `ci`: build unsigned Debug and Release simulator apps.
 
-Tests default to iPhone 17 / iOS 26.2, the same simulator as CI. Local runs use whichever Xcode is selected (`xcode-select -p`), while CI uses Xcode 26.3 and mise 2026.10.11. To match CI's Xcode, prefix a command with `DEVELOPER_DIR=/Applications/Xcode_26.3.app/Contents/Developer`, or switch with `xcode-select`. Overrides are available:
+Builds use a generic iOS Simulator destination. Local runs use whichever Xcode is selected (`xcode-select -p`), while CI uses Xcode 26.3 and mise 2026.10.11. To match CI's Xcode, prefix a command with `DEVELOPER_DIR=/Applications/Xcode_26.3.app/Contents/Developer`, or switch with `xcode-select`. Overrides are available:
 
 ```sh
-mise exec -- bundle exec fastlane ios test device:"iPhone 17 Pro (26.2)"
 mise exec -- bundle exec fastlane ios build configuration:Debug
 ```
 
-All output is under the repository's ignored `build/` directory: build and test logs in `build/logs/`, test reports and `.xcresult` in `build/tests/`, DerivedData in `build/DerivedData/`, and Fastlane's disposable lane summary in `build/report.xml`. The entire `build/` folder is disposable and ignored by Git; deleting it clears build caches and reports, and the next Fastlane run recreates it. There are no signing, upload or deployment lanes.
+All output is under the repository's ignored `build/` directory: build logs in `build/logs/`, DerivedData in `build/DerivedData/`, and Fastlane's disposable lane summary in `build/report.xml`. The entire `build/` folder is disposable and ignored by Git; deleting it clears build caches and reports, and the next Fastlane run recreates it. There are no signing, upload or deployment lanes.
 
 ## Pre-commit
 
@@ -100,17 +97,15 @@ git config --get core.hooksPath
 git hook run pre-commit
 ```
 
-## Tuist and tests
+## Tuist project generation
 
-`Project.swift` defines the app, app test target, build settings and shared scheme. Its options disable automatic schemes and unused generated bundle/resource helpers. The local package and its modules stay defined only in `Packages/PropertyFinderKit/Package.swift`.
+`Project.swift` defines the app, build settings and shared scheme. Its options disable automatic schemes and unused generated bundle/resource helpers. The local package and its modules stay defined only in `Packages/PropertyFinderKit/Package.swift`.
 
 No `Tuist.swift` is needed for the current setup. The shared scheme contains no dependency on the Tuist executable.
 
-`TestPlans/Tahudu.xctestplan` selects `TahuduTests`, `ListingsTests`, `SettingsTests`, `NetworkingTests` and `LoggerTests`. Its app target identifier refers to the generated project; verify the plan when renaming targets.
+Automated tests are deferred. No test sources, test targets or test plans are currently included, and CI builds the app without running tests.
 
-The generated scheme shows the Main Thread Checker as disabled, because Tuist's test-plan scheme API has no diagnostics option. Test runs follow the plan's own setting, which enables it.
-
-Keep `Tahudu.xcodeproj/`, `Project.swift` and the test plan in version control. Update the manifest and regenerate rather than editing generated project files manually. The convenience workspace and local caches are ignored.
+Keep `Tahudu.xcodeproj/` and `Project.swift` in version control. Update the manifest and regenerate rather than editing generated project files manually. The convenience workspace and local caches are ignored.
 
 Normal Xcode incremental builds reuse local DerivedData. No cross-run DerivedData cache is configured in GitHub Actions. Tuist binary caching has no eligible targets with the current native Swift-package integration. Tuist's separate Xcode compilation cache would require an account/project, service setup and CI authentication; it remains deferred.
 
@@ -122,6 +117,6 @@ Normal Xcode incremental builds reuse local DerivedData. No cross-run DerivedDat
 2. Checks Swift formatting and scans fetched Git history for secrets.
 3. Regenerates the project and fails on any change to the included project, including newly generated files.
 4. Enters `Tooling/`, installs locked gems and runs `bundle exec fastlane ios ci`.
-5. Uploads logs and test results, including on failure.
+5. Uploads build logs, including on failure.
 
 The mise action exposes tools on `PATH`. Actions use pinned commits and read-only repository permissions. The workflow needs no repository secrets.

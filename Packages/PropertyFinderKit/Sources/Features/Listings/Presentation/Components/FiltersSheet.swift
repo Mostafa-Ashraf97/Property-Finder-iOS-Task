@@ -45,7 +45,6 @@ struct FiltersSheet: View {
                             }
                             .contentShape(Rectangle())
                         }
-                        .accessibilityAddTraits(isSelected ? .isSelected : [])
                     }
                 } header: {
                     Text("Property type")
@@ -85,7 +84,6 @@ struct FiltersSheet: View {
                         .frame(maxWidth: .infinity, minHeight: 44)
                 }
                 .buttonStyle(.borderedProminent)
-                .accessibilityIdentifier("filters.apply")
                 .padding(Spacing.pt16)
                 .background(.regularMaterial)
             }

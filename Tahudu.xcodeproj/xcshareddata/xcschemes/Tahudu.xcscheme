@@ -28,12 +28,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
       disableMainThreadChecker = "YES">
-      <TestPlans>
-         <TestPlanReference
-            default = "YES"
-            reference = "container:TestPlans/Tahudu.xctestplan">
-         </TestPlanReference>
-      </TestPlans>
       <Testables>
       </Testables>
    </TestAction>

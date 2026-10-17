@@ -8,22 +8,25 @@ struct ListingsContent: View {
 
     var body: some View {
         switch viewModel.state {
-        case .loading, .failed:
+        case .loading:
+            list
+                .scrollDisabled(true)
+        case .failed:
             content
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         default:
-            refreshableList
+            list
+                .refreshable { await viewModel.refresh() }
         }
     }
 
-    private var refreshableList: some View {
+    private var list: some View {
         ScrollViewReader { scrollProxy in
             List {
                 Color.clear
                     .frame(height: Spacing.pt4)
                     .listRowInsets(EdgeInsets())
                     .listRowSeparator(.hidden)
-                    .accessibilityHidden(true)
                     .id(Self.topAnchor)
 
                 Group {
@@ -34,7 +37,6 @@ struct ListingsContent: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(Spacing.pt12)
                             .background(Color.noticeBackground, in: RoundedRectangle(cornerRadius: 8))
-                            .accessibilityIdentifier("listings.refreshMessage")
                     }
 
                     content
@@ -48,7 +50,6 @@ struct ListingsContent: View {
             .scrollContentBackground(.hidden)
             .contentMargins(.vertical, 0, for: .scrollContent)
             .scrollDismissesKeyboard(.immediately)
-            .refreshable { await viewModel.refresh() }
             .background(viewModel.criteria.favouritesOnly ? Color.accent.opacity(0.06) : .clear)
             .onChange(of: viewModel.criteria) {
                 scrollProxy.scrollTo(Self.topAnchor, anchor: .top)
@@ -60,7 +61,7 @@ struct ListingsContent: View {
     private var content: some View {
         switch viewModel.state {
         case .loading:
-            loadingIndicator
+            ListingsSkeleton()
         case let .failed(error):
             message(
                 title: "Unable to load properties",
@@ -93,12 +94,6 @@ struct ListingsContent: View {
         }
     }
 
-    private var loadingIndicator: some View {
-        ProgressView("Loading properties…")
-            .font(.detail)
-            .frame(maxWidth: .infinity, minHeight: 200)
-    }
-
     private func cardList(_ cards: [ListingCardViewData]) -> some View {
         ForEach(cards) { card in
             ListingCard(
@@ -121,10 +116,8 @@ struct ListingsContent: View {
             Image(systemName: systemImage)
                 .font(.largeTitle)
                 .foregroundStyle(.secondary)
-                .accessibilityHidden(true)
             Text(title)
                 .fontWeight(.semibold)
-                .accessibilityAddTraits(.isHeader)
             Text(text)
                 .foregroundStyle(.secondary)
             if let action {

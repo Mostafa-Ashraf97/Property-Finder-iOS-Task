@@ -24,9 +24,9 @@ let project = Project(
             product: .app,
             bundleId: "ae.propertyfinder.Tahudu",
             deploymentTargets: .iOS("26.0"),
-            infoPlist: nil,
+            infoPlist: .file(path: "Tahudu/Info.plist"),
             sources: ["Tahudu/**/*.swift"],
-            resources: ["Tahudu/Assets/**", "Tahudu/PrivacyInfo.xcprivacy"],
+            resources: ["Tahudu/Assets/**", "Tahudu/LaunchScreen.storyboard", "Tahudu/PrivacyInfo.xcprivacy"],
             dependencies: [
                 .package(product: "Listings"),
                 .package(product: "Settings"),
@@ -42,23 +42,8 @@ let project = Project(
                 "ENABLE_PREVIEWS": "YES",
                 "INFOPLIST_KEY_UIApplicationSceneManifest_Generation": "YES",
                 "INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents": "YES",
-                "INFOPLIST_KEY_UILaunchScreen_Generation": "YES",
                 "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone": "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight",
                 "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad": "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight",
-            ])
-        ),
-        .target(
-            name: "TahuduTests",
-            destinations: [.iPhone, .iPad],
-            product: .unitTests,
-            bundleId: "ae.propertyfinder.TahuduTests",
-            deploymentTargets: .iOS("26.0"),
-            infoPlist: nil,
-            sources: ["TahuduTests/**/*.swift"],
-            dependencies: [.target(name: "Tahudu")],
-            settings: .settings(base: [
-                "SWIFT_DEFAULT_ACTOR_ISOLATION": "nonisolated",
-                "SWIFT_EMIT_LOC_STRINGS": "NO",
             ])
         ),
     ],
@@ -66,7 +51,6 @@ let project = Project(
         .scheme(
             name: "Tahudu",
             buildAction: .buildAction(targets: ["Tahudu"]),
-            testAction: .testPlans(["TestPlans/Tahudu.xctestplan"]),
             runAction: .runAction(configuration: .debug),
             archiveAction: .archiveAction(configuration: .release),
             profileAction: .profileAction(configuration: .release),

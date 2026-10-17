@@ -44,3 +44,25 @@ extension ListingCardViewData {
         )
     }
 }
+
+extension ListingCardViewData {
+    /// Stand-in content for the loading skeleton. Its text has typical lengths, so the redacted card is shaped like a real one.
+    static func placeholder(id: String) -> ListingCardViewData {
+        ListingCardViewData(
+            id: id,
+            images: [],
+            tags: [],
+            isFavourite: false,
+            propertyType: "Apartment",
+            delivery: "Delivery: 2025",
+            price: "0,000,000 AED",
+            location: "Building name, Community, City",
+            bedrooms: "1 Bed",
+            bathrooms: "1 Bath",
+            area: "000 sqft",
+            published: "Published 1 day ago",
+            lastContacted: nil,
+            contactOptions: [.phone, .email, .whatsApp]
+        )
+    }
+}

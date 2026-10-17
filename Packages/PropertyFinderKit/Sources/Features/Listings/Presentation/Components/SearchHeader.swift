@@ -47,8 +47,6 @@ struct SearchHeader: View {
                     }
                 }
         }
-        .accessibilityLabel("Filters")
-        .accessibilityValue("\(activeCount) active")
     }
 
     private var sortMenu: some View {
@@ -69,8 +67,6 @@ struct SearchHeader: View {
             icon("arrow.up.arrow.down", isActive: viewModel.criteria.sortOrder != .recommended)
                 .scaleEffect(x: -1)
         }
-        .accessibilityLabel("Sort properties")
-        .accessibilityValue(viewModel.criteria.sortOrder.title)
     }
 
     private var favouritesButton: some View {
@@ -85,9 +81,6 @@ struct SearchHeader: View {
                 tint: isShowingFavourites ? .brand : Color.accent
             )
         }
-        .accessibilityLabel("Show favourites only")
-        .accessibilityValue(isShowingFavourites ? "On" : "Off")
-        .accessibilityIdentifier("search.favouritesFilter")
     }
 
     private var searchField: some View {
@@ -102,7 +95,6 @@ struct SearchHeader: View {
         )
         .textInputAutocapitalization(.words)
         .submitLabel(.search)
-        .accessibilityIdentifier("search.query")
     }
 
     @ViewBuilder
@@ -113,7 +105,6 @@ struct SearchHeader: View {
                 if isShowingFavourites {
                     Image(systemName: "star.fill")
                         .foregroundStyle(Color.brand)
-                        .accessibilityHidden(true)
                 }
                 Text(summary)
                     .fontWeight(.semibold)
@@ -131,14 +122,12 @@ struct SearchHeader: View {
                 .expandingHitArea(by: Spacing.pt12)
             }
             .font(.detail)
-            .accessibilityIdentifier("search.summary")
         }
     }
 
     private func icon(_ systemName: String, isActive: Bool, tint: Color = Color.accent) -> some View {
         Image(systemName: systemName)
             .font(.body.weight(.light))
-            .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
             .foregroundStyle(tint)
             .frame(minWidth: 20, minHeight: 20)
             .background {

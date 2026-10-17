@@ -1,4 +1,6 @@
+import Listings
 import Observation
+import Settings
 import SwiftUI
 
 enum AppTab: CaseIterable {
@@ -20,24 +22,26 @@ enum AppTab: CaseIterable {
     }
 }
 
-/// Owns app-level navigation and asks the factory for each destination's screen.
+/// Owns app-level navigation. Each tab's screen is built once, so re-rendering the tab view never rebuilds a feature.
 @Observable
 final class AppCoordinator {
     var selectedTab: AppTab
-    @ObservationIgnored private let factory: AppFactory
+    @ObservationIgnored private let listingsScreen: ListingsView
+    @ObservationIgnored private let settingsScreen: SettingsView
 
     init(factory: AppFactory, initialTab: AppTab = .listings) {
-        self.factory = factory
+        listingsScreen = factory.makeListingsView()
+        settingsScreen = factory.makeSettingsView()
         selectedTab = initialTab
     }
 
     @ViewBuilder
-    func makeScreen(for tab: AppTab) -> some View {
+    func screen(for tab: AppTab) -> some View {
         switch tab {
         case .listings:
-            factory.makeListingsView()
+            listingsScreen
         case .settings:
-            factory.makeSettingsView()
+            settingsScreen
                 .ignoresSafeArea()
         }
     }

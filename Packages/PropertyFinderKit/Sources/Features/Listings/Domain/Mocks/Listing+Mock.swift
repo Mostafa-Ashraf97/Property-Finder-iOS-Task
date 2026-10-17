@@ -2,7 +2,7 @@
     import Foundation
 
     extension Listing {
-        /// A listing with plain defaults; pass only the fields a test or preview cares about.
+        /// A listing with plain defaults; pass only the fields a preview needs.
         static func mock(
             id: String = "mock",
             type: String = "Apartment",

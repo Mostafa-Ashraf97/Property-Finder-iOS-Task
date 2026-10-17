@@ -8,7 +8,7 @@ struct TahuduTabView: View {
         TabView(selection: $coordinator.selectedTab) {
             ForEach(AppTab.allCases, id: \.self) { tab in
                 Tab(tab.title, systemImage: tab.systemImage, value: tab) {
-                    coordinator.makeScreen(for: tab)
+                    coordinator.screen(for: tab)
                 }
             }
         }

@@ -19,13 +19,10 @@ package struct ClearableTextField: View {
             if let symbol {
                 Image(systemName: symbol)
                     .font(.body)
-                    .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
                     .foregroundStyle(Color.inputPlaceholder)
-                    .accessibilityHidden(true)
             }
             TextField("", text: $text, prompt: Text(label).foregroundStyle(Color.inputPlaceholder))
                 .focused($isFocused)
-                .accessibilityLabel(label)
                 .onSubmit { isFocused = false }
             if !text.isEmpty {
                 Button {
@@ -37,7 +34,6 @@ package struct ClearableTextField: View {
                         .expandingHitArea(by: Spacing.pt12)
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel("Clear search text")
             }
         }
         .padding(.horizontal, Spacing.pt16)

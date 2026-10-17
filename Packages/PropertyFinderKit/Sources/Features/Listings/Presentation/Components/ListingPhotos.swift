@@ -44,19 +44,6 @@ struct ListingPhotos: View {
             .shadow(color: .black.opacity(0.25), radius: 4)
             .padding(.bottom, Spacing.pt8)
         }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Property photos")
-        .accessibilityValue("Photo \((page ?? 0) + 1) of \(images.count)")
-        .accessibilityAdjustableAction { direction in
-            let current = page ?? 0
-            withAnimation {
-                switch direction {
-                case .increment: page = min(current + 1, images.count - 1)
-                case .decrement: page = max(current - 1, 0)
-                @unknown default: break
-                }
-            }
-        }
     }
 
     @ViewBuilder
@@ -70,7 +57,6 @@ struct ListingPhotos: View {
             Image(uiImage: image)
                 .resizable()
                 .scaledToFill()
-                .accessibilityLabel("Property photo")
         } else {
             Label("Image unavailable", systemImage: "house")
                 .foregroundStyle(.secondary)

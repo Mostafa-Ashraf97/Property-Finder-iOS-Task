@@ -5,6 +5,5 @@
 --wraparguments before-first
 --wrapparameters before-first
 --trailing-commas collections-only
---test-case-name-format standard-identifiers
 --disable redundantMemberwiseInit,redundantVariable
 --exclude ../.git,../.build,../.bundle,../build

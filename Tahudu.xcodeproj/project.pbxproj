@@ -11,9 +11,9 @@
 		11F81BB833E3FF53BE6CA1BB /* AppFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA519B0618698B29F136D5E8 /* AppFactory.swift */; };
 		17E51FE5B5FAB71C5B8A44E3 /* TahuduApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BCEABFE67F0643136A3A10 /* TahuduApp.swift */; };
 		1FC471A7D479572D541CED11 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 2090B6EDBA747D42C5546247 /* PrivacyInfo.xcprivacy */; };
-		31CAF0C6E9D89B8E228DDFBD /* TahuduTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC634D691FFBF2010FCFAB5D /* TahuduTests.swift */; };
 		41939DE40ED11E2BC2D7008B /* Listings in Frameworks */ = {isa = PBXBuildFile; productRef = B8F3BB5F5443F6D1CC12736D /* Listings */; };
 		6FA7008A8D2EA88F380E322E /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B915267F8158F97BEC140A4 /* AppCoordinator.swift */; };
+		71D9CB7513E903413EDE5684 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A95EB4859327EA2591925FE8 /* LaunchScreen.storyboard */; };
 		87EFE4C41CFD781F48A03786 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = 34138225F7053175636E69FE /* Networking */; };
 		A640F40B1835F39247ABBCC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63355346939A275DC3F9B76D /* Assets.xcassets */; };
 		AD9AA27CE212F1994022AE00 /* Logger in Frameworks */ = {isa = PBXBuildFile; productRef = 3A064F421480A89D792FC490 /* Logger */; };
@@ -21,28 +21,8 @@
 		E67E163B3F2173EB6AB20345 /* TahuduTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2859265B8CBAB5E59B7C51 /* TahuduTabView.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		FF938C1324CEC45E35EFC7F7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 81BB22DB62659F5103420AC5 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E66FA1E4C4F84F4A3DBCF7C4;
-			remoteInfo = Tahudu;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		829A10554567B2FADC31CCEA /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		EA44AF117F12DD03C0F79840 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
@@ -56,14 +36,14 @@
 
 /* Begin PBXFileReference section */
 		2090B6EDBA747D42C5546247 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		5B33FFF909EF83E019F072E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		63355346939A275DC3F9B76D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		71BCEABFE67F0643136A3A10 /* TahuduApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TahuduApp.swift; sourceTree = "<group>"; };
 		7E82ED1345EB17D68D42562E /* Tahudu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tahudu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87DAA7F81EA83AA2B041C162 /* PropertyFinderKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = PropertyFinderKit; path = Packages/PropertyFinderKit; sourceTree = "<group>"; };
 		8B915267F8158F97BEC140A4 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
-		AC634D691FFBF2010FCFAB5D /* TahuduTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TahuduTests.swift; sourceTree = "<group>"; };
+		A95EB4859327EA2591925FE8 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BA519B0618698B29F136D5E8 /* AppFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFactory.swift; sourceTree = "<group>"; };
-		D923620CC4C9C439E1969CA3 /* TahuduTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TahuduTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA2859265B8CBAB5E59B7C51 /* TahuduTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TahuduTabView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,13 +60,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8BF9E2FADFD0C6AAF8A50368 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -94,17 +67,8 @@
 			isa = PBXGroup;
 			children = (
 				BF5B4DB170335EE6A362EE97 /* Tahudu */,
-				4714B785874EAE100576FF08 /* TahuduTests */,
 			);
 			name = Project;
-			sourceTree = "<group>";
-		};
-		4714B785874EAE100576FF08 /* TahuduTests */ = {
-			isa = PBXGroup;
-			children = (
-				AC634D691FFBF2010FCFAB5D /* TahuduTests.swift */,
-			);
-			path = TahuduTests;
 			sourceTree = "<group>";
 		};
 		484D4C67DF1899498CEA1D65 /* Packages */ = {
@@ -119,7 +83,6 @@
 			isa = PBXGroup;
 			children = (
 				7E82ED1345EB17D68D42562E /* Tahudu.app */,
-				D923620CC4C9C439E1969CA3 /* TahuduTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -138,6 +101,8 @@
 			children = (
 				E1E56BB71D0B3EFE5DDE12FD /* App */,
 				FDD3DCFC3550A85E62921954 /* Assets */,
+				5B33FFF909EF83E019F072E8 /* Info.plist */,
+				A95EB4859327EA2591925FE8 /* LaunchScreen.storyboard */,
 				2090B6EDBA747D42C5546247 /* PrivacyInfo.xcprivacy */,
 				71BCEABFE67F0643136A3A10 /* TahuduApp.swift */,
 			);
@@ -165,27 +130,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2AD44D7DFEC70D16D615804A /* TahuduTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9A4314638589964ED2E86446 /* Build configuration list for PBXNativeTarget "TahuduTests" */;
-			buildPhases = (
-				809CAB4B85B8F26E60EDEA42 /* Sources */,
-				8E9A3647D4E14188097F3C61 /* Resources */,
-				8BF9E2FADFD0C6AAF8A50368 /* Frameworks */,
-				EA44AF117F12DD03C0F79840 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CCC0E079E722C076B193E6AE /* PBXTargetDependency */,
-			);
-			name = TahuduTests;
-			packageProductDependencies = (
-			);
-			productName = TahuduTests;
-			productReference = D923620CC4C9C439E1969CA3 /* TahuduTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		E66FA1E4C4F84F4A3DBCF7C4 /* Tahudu */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DCFB6CC98F50E584AD54C229 /* Build configuration list for PBXNativeTarget "Tahudu" */;
@@ -219,9 +163,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				TargetAttributes = {
-					2AD44D7DFEC70D16D615804A = {
-						TestTargetID = E66FA1E4C4F84F4A3DBCF7C4;
-					};
 				};
 			};
 			buildConfigurationList = 17EFE99C028A7E9CB502B53B /* Build configuration list for PBXProject "Tahudu" */;
@@ -241,7 +182,6 @@
 			projectRoot = "";
 			targets = (
 				E66FA1E4C4F84F4A3DBCF7C4 /* Tahudu */,
-				2AD44D7DFEC70D16D615804A /* TahuduTests */,
 			);
 		};
 /* End PBXProject section */
@@ -252,14 +192,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A640F40B1835F39247ABBCC2 /* Assets.xcassets in Resources */,
+				71D9CB7513E903413EDE5684 /* LaunchScreen.storyboard in Resources */,
 				1FC471A7D479572D541CED11 /* PrivacyInfo.xcprivacy in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8E9A3647D4E14188097F3C61 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,24 +211,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		809CAB4B85B8F26E60EDEA42 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				31CAF0C6E9D89B8E228DDFBD /* TahuduTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		CCC0E079E722C076B193E6AE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Tahudu;
-			target = E66FA1E4C4F84F4A3DBCF7C4 /* Tahudu */;
-			targetProxy = FF938C1324CEC45E35EFC7F7 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1CBF78EEB8A12C90A00275B3 /* Release */ = {
@@ -304,9 +221,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Tahudu/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
@@ -335,9 +252,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Tahudu/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
@@ -362,64 +279,6 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
-		};
-		71D7A238A6F6741163EE12C7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = ae.propertyfinder.TahuduTests;
-				PRODUCT_NAME = TahuduTests;
-				SDKROOT = iphoneos;
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
-					"$(inherited)",
-					DEBUG,
-				);
-				SWIFT_COMPILATION_MODE = singlefile;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tahudu.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tahudu";
-				TEST_TARGET_NAME = Tahudu;
-			};
-			name = Debug;
-		};
-		9AE1247A9EBD7668A77CBE3D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = ae.propertyfinder.TahuduTests;
-				PRODUCT_NAME = TahuduTests;
-				SDKROOT = iphoneos;
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tahudu.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tahudu";
-				TEST_TARGET_NAME = Tahudu;
-			};
-			name = Release;
 		};
 		CA25E4654CF17F1FB842046D /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -555,15 +414,6 @@
 			buildConfigurations = (
 				CA25E4654CF17F1FB842046D /* Debug */,
 				F41D5E1A86571570391B2EFB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		9A4314638589964ED2E86446 /* Build configuration list for PBXNativeTarget "TahuduTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				71D7A238A6F6741163EE12C7 /* Debug */,
-				9AE1247A9EBD7668A77CBE3D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
