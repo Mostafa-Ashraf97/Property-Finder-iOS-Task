@@ -14,13 +14,13 @@ struct ListingsViewModelTests {
     // MARK: Loading
 
     @Test func showsCardsAfterLoading() async {
-        let model = makeModel(fetch: SequencedFetchListings([.success(feed)]))
+        let model = makeModel(fetch: SequencedFetchListings([.success(feed)]), favourites: ["studio"])
         #expect(model.state == .loading)
 
         await model.load()
 
         #expect(model.cards.map(\.id) == ["marina", "studio", "villa"])
-        #expect(model.cards.map(\.isFavourite) == [false, false, false])
+        #expect(model.cards.map(\.isFavourite) == [false, true, false])
     }
 
     @Test func loadingAgainAfterAFailureRetries() async {
@@ -229,14 +229,68 @@ struct ListingsViewModelTests {
         #expect(model.state == .noListings)
     }
 
+    @Test func showsNoFavouritesUntilAPropertyIsSaved() async {
+        let model = makeModel(fetch: SequencedFetchListings([.success(feed)]))
+        await model.load()
+
+        model.criteria.favouritesOnly = true
+        #expect(model.state == .noFavourites, "Nothing has been saved yet")
+
+        model.toggleFavourite(id: "villa")
+        #expect(model.cards.map(\.id) == ["villa"])
+
+        model.toggleFavourite(id: "villa")
+        #expect(model.state == .noFavourites, "Removing the last favourite empties the favourites view")
+    }
+
+    // MARK: Favourites
+
+    @Test func togglingAFavouriteUpdatesTheCardAndPersists() async {
+        let repository = InMemoryFavouritesRepository()
+        let model = makeModel(fetch: SequencedFetchListings([.success(feed)]), repository: repository)
+        await model.load()
+
+        model.toggleFavourite(id: "villa")
+        #expect(model.cards.first { $0.id == "villa" }?.isFavourite == true)
+        #expect(repository.ids == ["villa"])
+
+        model.toggleFavourite(id: "villa")
+        #expect(model.cards.first { $0.id == "villa" }?.isFavourite == false)
+        #expect(repository.ids.isEmpty)
+    }
+
+    @Test func favouritesFilterShowsOnlySavedListings() async {
+        let model = makeModel(fetch: SequencedFetchListings([.success(feed)]), favourites: ["villa", "marina"])
+        await model.load()
+        #expect(model.resultsSummary == nil)
+
+        model.criteria.favouritesOnly = true
+        #expect(model.cards.map(\.id) == ["marina", "villa"])
+        #expect(model.resultsSummary == "2 saved properties")
+
+        model.toggleFavourite(id: "marina")
+        #expect(model.cards.map(\.id) == ["villa"], "Unfavouriting removes the card from the favourites view")
+        #expect(model.resultsSummary == "1 saved property")
+
+        model.criteria.favouritesOnly = false
+        #expect(model.cards.count == 3)
+        #expect(model.resultsSummary == nil)
+    }
+
     // MARK: Helpers
 
     private func makeModel(
         fetch: any FetchListingsUseCaseProtocol,
+        favourites: Set<String> = [],
+        repository: InMemoryFavouritesRepository? = nil,
         logger: SpyLogger = SpyLogger()
     ) -> ListingsViewModel {
-        ListingsViewModel(
+        let repository = repository ?? InMemoryFavouritesRepository(ids: favourites)
+        return ListingsViewModel(
             fetchListingsUseCase: fetch,
+            loadFavouritesUseCase: LoadFavouritesUseCase(repository: repository),
+            toggleFavouriteUseCase: ToggleFavouriteUseCase(repository: repository),
+            queryListingsUseCase: QueryListingsUseCase(),
             logger: logger
         )
     }

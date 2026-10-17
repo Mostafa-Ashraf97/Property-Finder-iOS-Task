@@ -4,6 +4,7 @@ import SwiftUI
 struct ListingsContent: View {
     let viewModel: any ListingsViewModelProtocol
     let onRetry: () -> Void
+    private static let topAnchor = "listings.top"
 
     var body: some View {
         switch viewModel.state {
@@ -16,36 +17,43 @@ struct ListingsContent: View {
     }
 
     private var refreshableList: some View {
-        List {
-            Color.clear
-                .frame(height: Spacing.pt4)
-                .listRowInsets(EdgeInsets())
-                .listRowSeparator(.hidden)
-                .accessibilityHidden(true)
+        ScrollViewReader { scrollProxy in
+            List {
+                Color.clear
+                    .frame(height: Spacing.pt4)
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
+                    .accessibilityHidden(true)
+                    .id(Self.topAnchor)
 
-            Group {
-                if let message = viewModel.refreshMessage {
-                    Text(message)
-                        .font(.detail)
-                        .foregroundStyle(Color.primaryText)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(Spacing.pt12)
-                        .background(Color.noticeBackground, in: RoundedRectangle(cornerRadius: 8))
-                        .accessibilityIdentifier("listings.refreshMessage")
+                Group {
+                    if let message = viewModel.refreshMessage {
+                        Text(message)
+                            .font(.detail)
+                            .foregroundStyle(Color.primaryText)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(Spacing.pt12)
+                            .background(Color.noticeBackground, in: RoundedRectangle(cornerRadius: 8))
+                            .accessibilityIdentifier("listings.refreshMessage")
+                    }
+
+                    content
                 }
-
-                content
+                .listRowInsets(EdgeInsets(top: Spacing.pt8, leading: Spacing.pt16, bottom: Spacing.pt8, trailing: Spacing.pt16))
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
             }
-            .listRowInsets(EdgeInsets(top: Spacing.pt8, leading: Spacing.pt16, bottom: Spacing.pt8, trailing: Spacing.pt16))
-            .listRowSeparator(.hidden)
-            .listRowBackground(Color.clear)
+            .listStyle(.plain)
+            .environment(\.defaultMinListRowHeight, 0)
+            .scrollContentBackground(.hidden)
+            .contentMargins(.vertical, 0, for: .scrollContent)
+            .scrollDismissesKeyboard(.immediately)
+            .refreshable { await viewModel.refresh() }
+            .background(viewModel.criteria.favouritesOnly ? Color.accent.opacity(0.06) : .clear)
+            .onChange(of: viewModel.criteria) {
+                scrollProxy.scrollTo(Self.topAnchor, anchor: .top)
+            }
         }
-        .listStyle(.plain)
-        .environment(\.defaultMinListRowHeight, 0)
-        .scrollContentBackground(.hidden)
-        .contentMargins(.vertical, 0, for: .scrollContent)
-        .scrollDismissesKeyboard(.immediately)
-        .refreshable { await viewModel.refresh() }
     }
 
     @ViewBuilder
@@ -65,6 +73,13 @@ struct ListingsContent: View {
                 title: "No properties available",
                 text: "There are no listings to show right now.",
                 systemImage: "house"
+            )
+        case .noFavourites:
+            message(
+                title: "No favourites yet",
+                text: "Tap the heart on a property to save it here.",
+                systemImage: "heart",
+                action: ("Show all properties", { viewModel.criteria.favouritesOnly = false })
             )
         case let .results(cards):
             cardList(cards)

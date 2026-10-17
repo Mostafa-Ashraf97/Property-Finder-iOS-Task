@@ -91,6 +91,27 @@ extension ControlledFetchListings: FetchListingsUseCaseProtocol {
     }
 }
 
+@MainActor
+final class InMemoryFavouritesRepository {
+    private(set) var ids: Set<String>
+    private(set) var saveCount = 0
+
+    init(ids: Set<String> = []) {
+        self.ids = ids
+    }
+}
+
+extension InMemoryFavouritesRepository: FavouritesRepositoryProtocol {
+    func loadIDs() -> Set<String> {
+        ids
+    }
+
+    func saveIDs(_ ids: Set<String>) {
+        self.ids = ids
+        saveCount += 1
+    }
+}
+
 /// Polls briefly so tests can wait for work that hops between executors.
 @MainActor
 func waitUntil(_ condition: () -> Bool) async throws {

@@ -10,6 +10,7 @@
 		0E74C07649F004551021BA92 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 710808AFB797EB233C0E82B7 /* DesignSystem */; };
 		11F81BB833E3FF53BE6CA1BB /* AppFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA519B0618698B29F136D5E8 /* AppFactory.swift */; };
 		17E51FE5B5FAB71C5B8A44E3 /* TahuduApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BCEABFE67F0643136A3A10 /* TahuduApp.swift */; };
+		1FC471A7D479572D541CED11 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 2090B6EDBA747D42C5546247 /* PrivacyInfo.xcprivacy */; };
 		31CAF0C6E9D89B8E228DDFBD /* TahuduTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC634D691FFBF2010FCFAB5D /* TahuduTests.swift */; };
 		41939DE40ED11E2BC2D7008B /* Listings in Frameworks */ = {isa = PBXBuildFile; productRef = B8F3BB5F5443F6D1CC12736D /* Listings */; };
 		662676D9DB90F738A86D337E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15518926848C0500CDDFA4AB /* SettingsViewController.swift */; };
@@ -56,6 +57,7 @@
 
 /* Begin PBXFileReference section */
 		15518926848C0500CDDFA4AB /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		2090B6EDBA747D42C5546247 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		63355346939A275DC3F9B76D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6BE9C929F2C420D17881A75A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		71BCEABFE67F0643136A3A10 /* TahuduApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TahuduApp.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				E1E56BB71D0B3EFE5DDE12FD /* App */,
 				FDD3DCFC3550A85E62921954 /* Assets */,
 				839A53094ECBC09FCEC3FF8F /* Screens */,
+				2090B6EDBA747D42C5546247 /* PrivacyInfo.xcprivacy */,
 				71BCEABFE67F0643136A3A10 /* TahuduApp.swift */,
 			);
 			path = Tahudu;
@@ -268,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A640F40B1835F39247ABBCC2 /* Assets.xcassets in Resources */,
+				1FC471A7D479572D541CED11 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
