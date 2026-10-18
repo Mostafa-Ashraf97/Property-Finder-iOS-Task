@@ -106,7 +106,7 @@ git hook run pre-commit
 
 No `Tuist.swift` is needed for the current setup. The shared scheme contains no dependency on the Tuist executable.
 
-The shared scheme runs `TestPlans/Tahudu.xctestplan`, which selects the package's `NetworkingTests`, `ListingsTests`, `SettingsTests` and `SnapshotTests`. They are XCTest tests with stubs only, so they never call the real API. The snapshot references live in `Tests/SnapshotTests/__Snapshots__/` (excluded from the target in `Package.swift`) and are only compared on iOS 26.2. If you rename a test target, update the plan.
+The shared scheme runs `TestPlans/Tahudu.xctestplan`, which selects the package's `NetworkingTests`, `ListingsTests`, `SettingsTests` and `SnapshotTests`. They are XCTest tests with stubs only, so they never call the real API. The snapshot references live in `Tests/SnapshotTests/__Snapshots__/` (excluded from the target in `Package.swift`) and are only compared on iOS 26.2 (English (US) only, US region). If you rename a test target, update the plan.
 
 Keep `Tahudu.xcodeproj/` and `Project.swift` in version control. Update the manifest and regenerate rather than editing generated project files manually. The convenience workspace and local caches are ignored.
 

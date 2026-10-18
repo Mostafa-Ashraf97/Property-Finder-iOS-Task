@@ -4,11 +4,7 @@ An iOS property browser for the supplied exercise: browse live listings, search,
 
 **iOS 26+ · Swift 6 · SwiftUI + Observation · UIKit · Local Swift package · No third-party app libraries**
 
-<p align="center">
-  <a href="Screenshots/App/demo.mp4"><img src="Screenshots/App/demo.gif" width="280" alt="Demo: browsing listings, saving a favourite, searching, filtering, sorting and opening My Account"></a>
-  <br>
-  <sub>Browsing, favourites, search, filters, sorting and My Account. Select the preview for the full-quality video.</sub>
-</p>
+https://github.com/user-attachments/assets/7ef786ff-7206-4a9e-a359-277718a969b7
 
 The original brief, JSON contract and reference design are in [TASK.md](TASK.md).
 
@@ -142,7 +138,7 @@ XCTest targets in the package: `NetworkingTests`, `ListingsTests`, `SettingsTest
 
 - **Unit tests** cover request building, ETag and 304 handling, the offline fallback, search, filters and sorting, favourites, card formatting, the view model's states and reconnect refresh, analytics, feature flags and the Settings rows.
 - **No real API:** every dependency is a protocol replaced by a small stub, the HTTP client test answers in-process through a `URLProtocol` stub, and the app is never launched.
-- **Snapshots** compare two listing cards, the full Listings screen and the Settings list against PNGs in `Tests/SnapshotTests/__Snapshots__/`, using a small in-house helper. They're recorded on iOS 26.2, the CI simulator, and skipped on other versions. To accept a visual change, delete the PNG and run the test twice.
+- **Snapshots** compare two listing cards, the full Listings screen and the Settings list against PNGs in `Tests/SnapshotTests/__Snapshots__/`, using a small in-house helper. They're recorded on iOS 26.2 (English (US) only, US region) and skipped on other versions. To accept a visual change, delete the PNG and run the test twice.
 - **Conventions:** each test marks `// Given`, `// When` and `// Then`, and is named `test_unit_condition_result`.
 
 Run them with ⌘U, or `bundle exec fastlane ios test` from `Tooling/`.
@@ -157,7 +153,7 @@ Reviewers need only Xcode. Everything below is for contributors, and every tool 
 | --- | --- | --- |
 | **mise** | Pins Ruby, Tuist, SwiftFormat and Gitleaks in `.mise.toml`. | One file and one `mise install` replace separate Homebrew, rbenv and manual installs. CI installs the same versions through the mise action, which ends "works on my machine". |
 | **Bundler** | Locks Fastlane and its Ruby gems in `Tooling/Gemfile.lock`. | Fastlane only changes when the lock file does, and CI rejects an outdated lock. |
-| **Tuist** | Generates `Tahudu.xcodeproj` from `Project.swift`. | The project is reviewed as Swift code instead of `.pbxproj` diffs. The generated project is committed, so reviewers don't need Tuist. |
+| **Tuist** | Generates `Tahudu.xcodeproj` from `Project.swift`. | The project is reviewed as Swift code instead of `.pbxproj` diffs. The generated project is committed, so reviewers don't need Tuist. (It should be gitignored in a production app) |
 | **Fastlane** | `test`, `build` and `ci` (tests, then a Release build). | One command runs the same steps locally and in CI, so the workflow file stays a thin wrapper and CI failures can be reproduced on a laptop. Signing and TestFlight lanes can be added later without touching the workflow. |
 | **SwiftFormat** | Checks formatting against `Tooling/.swiftformat`. | Style is settled by a tool instead of in code review. The hook and CI read the same config, so they never disagree. |
 | **Gitleaks** | Scans for API keys, tokens and other secrets. | A secret that reaches Git history is hard to remove, so it's caught before the commit and again across the whole history in CI. |

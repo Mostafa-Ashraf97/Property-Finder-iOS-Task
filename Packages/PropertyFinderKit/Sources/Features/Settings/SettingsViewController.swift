@@ -28,6 +28,7 @@ final class SettingsViewController: UITableViewController {
         content.secondaryText = row.value
         cell.contentConfiguration = content
         cell.accessoryType = .disclosureIndicator
+        cell.accessibilityIdentifier = row.id
         return cell
     }
 
@@ -45,26 +46,31 @@ final class SettingsViewController: UITableViewController {
         [
             SettingsSection(rows: [
                 SettingsRow(
+                    id: "settings.language",
                     title: "Language",
                     systemImage: "textformat",
                     value: "English"
                 ) { [weak self] in self?.openSystemSettings() },
                 SettingsRow(
+                    id: "settings.country",
                     title: "Country",
                     systemImage: "globe",
                     value: "United Arab Emirates"
                 ) { [weak self] in self?.showCountrySelectionScreen() },
                 SettingsRow(
+                    id: "settings.notifications",
                     title: "Notifications",
                     systemImage: "app.badge"
                 ) { [weak self] in self?.showNotificationScreen() },
             ]),
             SettingsSection(rows: [
                 SettingsRow(
+                    id: "settings.about",
                     title: "About",
                     systemImage: "info.circle"
                 ) { [weak self] in self?.showAboutScreen() },
                 SettingsRow(
+                    id: "settings.feedback",
                     title: "Feedback",
                     systemImage: "text.bubble"
                 ) { [weak self] in self?.showFeedbackScreen() },

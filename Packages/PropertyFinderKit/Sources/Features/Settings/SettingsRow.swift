@@ -7,6 +7,7 @@ struct SettingsSection {
 ///
 /// Each row carries its own value and action, so adding a row is one new value and the table code never changes.
 struct SettingsRow {
+    let id: String
     let title: String
     let systemImage: String
     var value: String?
